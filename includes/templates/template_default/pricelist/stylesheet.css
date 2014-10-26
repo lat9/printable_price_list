@@ -1,0 +1,66 @@
+/*
+$Id: stylesheet.css, v1.02 2004/12/20 paulm
+*/
+body, html { text-align: center; font-family: Arial, serif; color: black; background-color: #eee; }
+td { text-align: left; }
+h1, h2, h3, h4, h5 ,h6 { margin: 0.3em; }
+h1 { color: #e00; font-family: Verdana, sans-serif; }
+img { border-style: none; } 
+
+table { margin: 0 auto; }
+tfoot { background-color: #dcdcdc; }
+
+/* profiles navigation */
+div#profilesListPL { height: 30px; width: 100%; border-top: solid #000 1px; border-bottom: solid #000 1px; background-color: #336699; }
+div#profilesListPL ul { margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; font-size: small; color: #FFF; line-height: 30px; white-space: nowrap; }
+div#profilesListPL li { list-style-type: none; display: inline; }
+div#profilesListPL li a { text-decoration: none; padding: 7px 10px; color: #FFF; }
+div#profilesListPL li a:link { color: #FFF; }
+div#profilesListPL li a:visited { color: #CCC; }
+div#profilesListPL li a:hover { color: #FFF; background-color: #3366FF; }
+div#profilesListPL ul li.selectedPL a { color: white !important; background-color: #3366FF; }
+/* end profiles navigation */
+
+/* prevents header margin differences between browsers */
+#languagesPL, #currenciesPL { width: 125px; margin: 5px; }
+#optionsPL { background: #ffe; font-size: 10pt; }
+#boxesPL td form{ margin: 0; padding: 0; }
+.notSplPL { text-decoration: line-through; }
+.inactivePL td { font-style: italic; font-weight: lighter; }
+.selectionPL, .selectionPl table { margin: 5px auto; text-align: center; }
+.selectionPl table { border: 1px solid silver; background: #aef; }
+
+table.colPL { border: 1px silver solid; margin: 0 auto; }
+table.colWrapPL { margin: 0 auto; }
+table.colWrapPL td { vertical-align: top; }
+
+.datePL, #print-me { text-align: right; }
+.prcPL s { display: none; }
+.splPL { color: red; }
+.pagePL, .pageOnePL { color: black; background-color: white; width: 95%; margin: 0 auto; border: 1px blue solid; position: relative; }
+.headPL { float: left; }
+.footPL { font-size: 0.9em; width: 100%; text-align: center; }
+.colPL td, .colPL th { font-family: Verdana, sans-serif; font-size: 0.6em; border: #ddf solid 1px; padding: 2px 2px; }
+.colhPL td { text-align: center; font-size: 0.55em; border-width: 0px; background-color: #f9f9f9; }
+
+/* bof added for image and description  */
+.imgDescrPL div { border: 0px double #ddd; border-width: 0 0 5px 0 !important; width: 100%; }
+.imgDescrPL div img { margin: 2px; }
+.imgDescrRndPL_3 img, .imgDescrRndPL_4 img { float: left; }
+.imgDescrRndPL_1 img, .imgDescrRndPL_2 img{ float: right; }
+
+.scPL-1 th { font-style: italic; font-weight: bold; color: red; text-align: center; background: #ff9; border: 1px solid #ddf; }
+.scPL-2 th { font-weight: bold; color: red; background: #ffd; border: 1px solid #ddf; text-align: left; text-indent: 2em; }
+td.prcPL , td.splPL, td.splDatePL, td.sohPL { text-align: right; }
+.pagePL, .pageOnePL { position: relative; margin-bottom: 20px; }
+.clearBoth { clear: both; }
+
+@media print {
+  a { text-decoration: none; }
+  tr.new-page { page-break-before: always;!important }
+  #print-me, .noPrintPL { display: none; }
+  tbody tr { page-break-inside: avoid; }
+  thead { display: table-header-group; }
+  tbody { display: table-row-group; }
+  tfoot { display: table-footer-group; }
+}    
