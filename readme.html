@@ -67,7 +67,7 @@ img { margin-left: 20px; max-width: 95%; }
   <li>Using EZ-pages.  Set the <em>Internal Link URL</em> to <b>index.php?main_page=pricelist</b>.  You might want also to choose <em>Open New Window</em> to <b>Yes</b> since the price list is usually not integrated into the store's look-and-feel.</li>
   <li>Enable the &quot;Information&quot; sidebox link using the setting available in <em>Configuration-&gt;Printable Price-list</em>.</li>
 </ol>
-<p>The price-list displays in a format similar to the sample image to the left;</p>
+<p>The price-list displays in a format similar to the sample image to the left.</p>
 <div class="clearBoth"></div>
 
 <hr />
@@ -76,14 +76,14 @@ img { margin-left: 20px; max-width: 95%; }
 <ol>
   <li>Unzip the plugin's package file, which you've most likely already done if you're reading this!</li>
   <li>Rename the /YOUR_ADMIN folder to match your Zen Cart admin folder name.</li>
-  <li>Rename the /YOUR_TEMPLATE folder to match your current template's name.</li>
+  <li>Rename the /includes/modules/sideboxes/YOUR_TEMPLATE folder, changing YOUR_TEMPLATE to match your current template's name.  If your current template already includes changes to the information.php sidebox, you'll need to merge those pre-existing changes with the change introduced by this plugin.</li>
   <li>Sign into your Zen Cart admin console.</li>
   <li>Copy the plugin's files to your store's file system.<ol>
     <li>/includes/extra_definitions/pricelist_filenames.php</li>
     <li>/includes/languages/dutch/pricelist.php</li>
-    <li>/includes/languages/dutch/extra_definitions/pricelist_box_heading.php</li>
+    <li>/includes/languages/dutch/extra_definitions/printable_pricelist_extra_definitions.php</li>
     <li>/includes/languages/english/pricelist.php</li>
-    <li>/includes/langauges/english/extra_definitions/pricelist_box_heading.php</li>
+    <li>/includes/languages/english/extra_definitions/printable_pricelist_extra_definitions.php</li>
     <li>/includes/modules/pages/pricelist/header_php.php</li>
     <li>/includes/modules/sideboxes/YOUR_TEMPLATE/information.php</li>
     <li>/includes/templates/template_default/pricelist/html_header.php</li>
@@ -102,8 +102,11 @@ img { margin-left: 20px; max-width: 95%; }
 <hr />
 <h2>Version History</h2>
 <ul>
-  <li>v2.0.1, 2015-xx-yy (lat9):<ol>
+  <li>v2.0.1, 2015-07-17 (lat9):<ol>
     <li>BUGFIX: Corrected the name of /includes/templates/template_default/pricelist/profile-1.css (was proile-1.css).</li>
+    <li>BUGFIX: Include missing language /extra_definition files.</li>
+    <li>CHANGE: Open pricelist in a new window when <em>Information</em> sidebox link is clicked.  Changed /includes/modules/sideboxes/YOUR_TEMPLATE/information.php.</li>
+    <li>CHANGE: Add configuration switch to enable/disable display of the currency symbol in the pricelist display's header.  Changed /YOUR_ADMIN/includes/functions/extra_functions/init_price_list_admin.php and /includes/templates/template_default/pricelist/tpl_main_page.php.</li>
   </ol></li>
   <li>v2.0.0, 2014-10-26 (lat9): Initial release for Zen Cart v1.5.1 and later.  The following changes were introduced:<ol>
     <li>Converted separate SQL installation script into an admin auto-loaded script.</li>
