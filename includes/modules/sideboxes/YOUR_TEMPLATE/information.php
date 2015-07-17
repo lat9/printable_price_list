@@ -26,7 +26,7 @@
 
 //-bof-printable_pricelist-lat9  *** 1 of 1 ***
   if (PL_SHOW_INFO_LINK == 'true') {
-    $information[] = '<a href="' . zen_href_link (FILENAME_PRICELIST) . '">' . BOX_HEADING_PRICELIST . '</a>';
+    $information[] = '<a href="' . zen_href_link (FILENAME_PRICELIST) . '" target="_blank">' . BOX_HEADING_PRICELIST . '</a>';
   }
 //-eof-printable_pricelist-lat9  *** 1 of 1 ***
 
