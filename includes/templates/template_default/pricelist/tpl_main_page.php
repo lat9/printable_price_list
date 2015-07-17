@@ -141,14 +141,15 @@ if (!$price_list->group_is_valid ($price_list->current_profile)) {
         <td class="ntsPL"><div><?php echo TABLE_HEADING_NOTES_B; ?></div></td>
 <?php      
     }
+    $pl_currency_symbol = (defined ('PL_INCLUDE_CURRENCY_SYMBOL') && PL_INCLUDE_CURRENCY_SYMBOL == 'false') ? '' : $price_list->currency_symbol;
     if ($price_list->config['show_price']) {
 ?>
-        <td class="prcPL"><?php echo TABLE_HEADING_PRICE_INC . $price_list->currency_symbol; ?></td>
+        <td class="prcPL"><?php echo TABLE_HEADING_PRICE_INC . $pl_currency_symbol; ?></td>
 <?php      
     }
     if ($price_list->config['show_taxfree']) {
 ?>
-        <td class="prcPL"><?php echo TABLE_HEADING_PRICE_EX . $price_list->currency_symbol; ?></td>
+        <td class="prcPL"><?php echo TABLE_HEADING_PRICE_EX . $pl_currency_symbol; ?></td>
 <?php        
     }   
 //Added by Vartan Kat on july 2007 for Add to cart button

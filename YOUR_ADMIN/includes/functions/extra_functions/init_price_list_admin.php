@@ -4,7 +4,7 @@
 //
 // Based on the configuration settings provided in the pricelist-3.sql file provided in v1.5.0 of this plugin.
 //
-define ('PL_CURRENT_VERSION', 'v2.0.0');
+define ('PL_CURRENT_VERSION', 'v2.0.1');
 
 // -----
 // First, install the main options.
@@ -38,6 +38,11 @@ if (PL_INSTALLED_VERSION != PL_CURRENT_VERSION) {
 }
 if (!zen_page_key_exists ('configPrintablePricelist')) {
   zen_register_admin_page ('configPrintablePricelist', 'BOX_CONFIGURATION_PL', 'FILENAME_CONFIGURATION', "gID=$cgi", 'configuration', 'Y', $cgi);
+  
+}
+
+if (!defined ('PL_INCLUDE_CURRENCY_SYMBOL')) {
+  $db->Execute ("INSERT INTO " . TABLE_CONFIGURATION . " ( configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function ) VALUES ( 'Include currency symbol in pricelist header?', 'PL_INCLUDE_CURRENCY_SYMBOL', 'true', 'Choose whether (<em>true</em>) or not (<em>false</em>) the currently-selected currencies\' symbol should be included in the pricelist print-out.', $cgi, 40, NULL , 'zen_cfg_select_option(array(\'true\', \'false\'),' )");
   
 }
 
