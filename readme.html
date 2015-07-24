@@ -19,14 +19,20 @@ ol li, ul li { margin: 5px 0; }
 img { margin-left: 20px; max-width: 95%; }
 .small_img { float: left; margin-right: 25px; }
 .clearBoth { clear: both; }
+#permissions { margin-top: 1em; }
 -->
 </style>
 </head>
 
 <body>
-<h1>Printable Price List &mdash;  for Zen Cart v1.5.1, v1.5.2 and v1.5.3</h1>
+<h1>Printable Price List &mdash;  for Zen Cart v1.5.1 to v1.5.4</h1>
 <h3>Version 2.0.1</h3>
 <p>Current Support Thread at Zen Cart Forums: <a href="http://www.zen-cart.com/showthread.php?49126-Printable-Price-list-support-thread" target="_blank">http://www.zen-cart.com/showthread.php?49126-Printable-Price-list-support-thread</a></p>
+<div id="permissions">
+  <p><strong>Note:</strong> This plugin's file-set includes a new folder: <code>/includes/templates/template_default/pricelist</code>. If your store creates debug-log files similar to the following upon an access to <code>http://www.yourstore.com/index.php?main_page=pricelist</code>, you'll need to check the permissions assigned to this new folder and its associated files: 755 and 644, respectively.</p>
+  <p><br /><code>PHP Warning: require(includes/templates/template_default/templates/tpl_pricelist_default.php): failed to open stream: No such file or directory in {filesystem}/includes/templates/template_default/common/tpl_main_page.php on line xxx</code></p>
+</div>
+
 <h3>Credits</h3>
 <p>This version of the plugin is based on v1.5.0 of the like-named plugin for the Zen Cart v1.3.x series, created by:
 <ul>
