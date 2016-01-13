@@ -4,7 +4,7 @@
 //
 // Based on the configuration settings provided in the pricelist-3.sql file provided in v1.5.0 of this plugin.
 //
-define ('PL_CURRENT_VERSION', 'v2.0.1');
+define ('PL_CURRENT_VERSION', 'v2.0.2');
 
 // -----
 // First, install the main options.
@@ -30,6 +30,8 @@ if (!defined ('PL_INSTALLED_VERSION')) {
   $db->Execute ("INSERT INTO " . TABLE_CONFIGURATION . " ( configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function ) VALUES ( 'Show Profile Links?', 'PL_SHOW_PROFILES', 'true', 'Choose <em>true</em> to display links to the currently-enabled profiles on the <em>pricelist</em> page.', $cgi, 20, NULL , 'zen_cfg_select_option(array(\'true\', \'false\'),' )");
   
   $db->Execute ("INSERT INTO " . TABLE_CONFIGURATION . " ( configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function ) VALUES ( 'Show Information Sidebox Link?', 'PL_SHOW_INFO_LINK', 'true', 'Choose whether (<em>true</em>) or not (<em>false</em>) a &quot;Price List&quot; link should be shown in the Information sidebox.', $cgi, 30, NULL , 'zen_cfg_select_option(array(\'true\', \'false\'),' )");
+  
+  define ('PL_INSTALLED_VERSION', PL_CURRENT_VERSION);
   
 }
 if (PL_INSTALLED_VERSION != PL_CURRENT_VERSION) {

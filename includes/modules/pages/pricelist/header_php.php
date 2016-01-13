@@ -64,7 +64,7 @@ class price_list extends base {
       array ('PL_SHOW_NOTES_A', 'show_notes_a', 'bool-col'),
       array ('PL_SHOW_NOTES_B', 'show_notes_b', 'bool-col'),
       array ('PL_SHOW_PRICE', 'show_price', 'bool-col', 'p.products_price'),
-      array ('PL_SHOW_TAX_FREE', 'show_taxfree', 'bool-col'),
+      array ('PL_SHOW_TAX_FREE', 'show_taxfree', 'bool-col', 'p.products_price'),
       array ('PL_SHOW_SPECIAL_PRICE', 'show_special_price', 'bool'),
       array ('PL_SHOW_SPECIAL_DATE', 'show_special_date', 'bool'),
       array ('PL_SHOW_ADDTOCART_BUTTON', 'show_cart_button', 'bool-col'),

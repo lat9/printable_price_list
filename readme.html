@@ -1,7 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Printable Price List</title>
 
 <style type="text/css">
@@ -25,8 +26,8 @@ img { margin-left: 20px; max-width: 95%; }
 </head>
 
 <body>
-<h1>Printable Price List &mdash;  for Zen Cart v1.5.1 to v1.5.4</h1>
-<h3>Version 2.0.1</h3>
+<h1>Printable Price List &mdash;  for Zen Cart v1.5.1 to v1.5.5</h1>
+<h3>Version 2.0.2</h3>
 <p>Current Support Thread at Zen Cart Forums: <a href="http://www.zen-cart.com/showthread.php?49126-Printable-Price-list-support-thread" target="_blank">http://www.zen-cart.com/showthread.php?49126-Printable-Price-list-support-thread</a></p>
 <div id="permissions">
   <p><strong>Note:</strong> This plugin's file-set includes a new folder: <code>/includes/templates/template_default/pricelist</code>. If your store creates debug-log files similar to the following upon an access to <code>http://www.yourstore.com/index.php?main_page=pricelist</code>, you'll need to check the permissions assigned to this new folder and its associated files: 755 and 644, respectively.</p>
@@ -108,6 +109,9 @@ img { margin-left: 20px; max-width: 95%; }
 <hr />
 <h2>Version History</h2>
 <ul>
+  <li>v2.0.2, 2015-01-13 (lat9):<ol>
+    <li>BUGFIX: <em>Price (ex)</em> not displayed if <em>Price (inc)</em> not displayed, too.</li>
+  </ol></li>
   <li>v2.0.1, 2015-07-24 (lat9):<ol>
     <li>BUGFIX: Corrected the name of /includes/templates/template_default/pricelist/profile-1.css (was proile-1.css).</li>
     <li>BUGFIX: Include missing language /extra_definition files.</li>
