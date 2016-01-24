@@ -7,7 +7,7 @@
  */
 // -----
 // Part of the Printable Price List plugin for Zen Cart v1.5.1 and later.
-// Copyright (C) 2014, Vinos de Frutas Tropicales (lat9)
+// Copyright (C) 2014-2016, Vinos de Frutas Tropicales (lat9)
 //
 if (!defined('IS_ADMIN_FLAG')) {
   die('Illegal Access');
@@ -287,9 +287,9 @@ class price_list extends base {
   // -----
   // Return the price, without either the left- or right-currency symbol.
   //
-  function display_price ($price_raw, $tax = 0){
+  function display_price ($price_raw, $tax_percentage = 0){
     global $currencies;
-    $price = $currencies->display_price ($price_raw, $tax);
+    $price = $currencies->format ($price_raw * (1 + $tax_percentage / 100));
     $price = str_replace($currencies->currencies[$_SESSION['currency']]['symbol_left'], '', $price);
     $price = str_replace($currencies->currencies[$_SESSION['currency']]['symbol_right'], '', $price);          
     

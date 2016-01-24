@@ -21,13 +21,14 @@ img { margin-left: 20px; max-width: 95%; }
 .small_img { float: left; margin-right: 25px; }
 .clearBoth { clear: both; }
 #permissions { margin-top: 1em; }
+.smaller { font-size: smaller; }
 -->
 </style>
 </head>
 
 <body>
 <h1>Printable Price List &mdash;  for Zen Cart v1.5.1 to v1.5.5</h1>
-<h3>Version 2.0.2</h3>
+<h3>Version 2.0.3.  <span class="smaller">Copyright &copy; 2014-2016, Vinos de Frutas Tropicales</span></h3>
 <p>Current Support Thread at Zen Cart Forums: <a href="http://www.zen-cart.com/showthread.php?49126-Printable-Price-list-support-thread" target="_blank">http://www.zen-cart.com/showthread.php?49126-Printable-Price-list-support-thread</a></p>
 <div id="permissions">
   <p><strong>Note:</strong> This plugin's file-set includes a new folder: <code>/includes/templates/template_default/pricelist</code>. If your store creates debug-log files similar to the following upon an access to <code>http://www.yourstore.com/index.php?main_page=pricelist</code>, you'll need to check the permissions assigned to this new folder and its associated files: 755 and 644, respectively.</p>
@@ -79,7 +80,7 @@ img { margin-left: 20px; max-width: 95%; }
 
 <hr />
 <h2 id="install">Installation</h2>
-<p>This plugin currently has no <span class="corefile">core-file overwrites</span>; you should <strong>always</strong> backup your cart's database and files prior to making any changes.</p>
+<p>This plugin currently has <b>no</b> <span class="corefile">core-file overwrites</span>; you should <strong>always</strong> backup your cart's database and files prior to making any changes.</p>
 <ol>
   <li>Unzip the plugin's package file, which you've most likely already done if you're reading this!</li>
   <li>Rename the /YOUR_ADMIN folder to match your Zen Cart admin folder name.</li>
@@ -109,7 +110,10 @@ img { margin-left: 20px; max-width: 95%; }
 <hr />
 <h2>Version History</h2>
 <ul>
-  <li>v2.0.2, 2015-01-13 (lat9):<ol>
+  <li>v2.0.3, 2016-01-24 (lat9):<ol>
+    <li>BUGFIX: <em>Price (inc)</em> not properly calculating the included tax.</li>
+  </ol></li>
+  <li>v2.0.2, 2016-01-13 (lat9):<ol>
     <li>BUGFIX: <em>Price (ex)</em> not displayed if <em>Price (inc)</em> not displayed, too.</li>
   </ol></li>
   <li>v2.0.1, 2015-07-24 (lat9):<ol>
