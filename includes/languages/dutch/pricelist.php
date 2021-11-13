@@ -43,4 +43,3 @@ define('NAVBAR_TITLE', 'Catalogus');
 define('TABLE_HEADING_SOH', 'Voorraad'); // bmoroney
 define('TABLE_HEADING_ADDTOCART', 'Add to cart');//Added by Vartan Kat for Add to cart button
 define('PL_TEXT_GROUP_NOT_ALLOWED', 'Sorry, you\'re not allowed to view this list.');
-?>

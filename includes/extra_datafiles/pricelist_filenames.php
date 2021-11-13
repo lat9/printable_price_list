@@ -22,5 +22,5 @@
 
 // define the new filenames used in the project
  
-  // pricelist paulm 200/05/29
-  define ('FILENAME_PRICELIST', 'pricelist');
+// pricelist paulm 200/05/29
+define('FILENAME_PRICELIST', 'pricelist');

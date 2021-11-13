@@ -1,11 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Printable Price List</title>
-
-<style type="text/css">
+<style">
 <!--
 a, a:active, a:visited { color: #006666; text-decoration: none; }
 a:hover { color:#00CC99; text-decoration: underline; }
@@ -27,12 +26,12 @@ img { margin-left: 20px; max-width: 95%; }
 </head>
 
 <body>
-<h1>Printable Price List &mdash;  for Zen Cart v1.5.1 to v1.5.5</h1>
-<h3>Version 2.0.3.  <span class="smaller">Copyright &copy; 2014-2016, Vinos de Frutas Tropicales</span></h3>
-<p>Current Support Thread at Zen Cart Forums: <a href="http://www.zen-cart.com/showthread.php?49126-Printable-Price-list-support-thread" target="_blank">http://www.zen-cart.com/showthread.php?49126-Printable-Price-list-support-thread</a></p>
+<h1>Printable Price List &mdash;  for Zen Cart v1.5.7 and later</h1>
+<h3>Version 2.0.3.  <span class="smaller">Copyright &copy; 2014-2021, Vinos de Frutas Tropicales</span></h3>
+<p>Current Support Thread at Zen Cart Forums: <a href="https://www.zen-cart.com/showthread.php?49126-Printable-Price-list-support-thread" target="_blank">https://www.zen-cart.com/showthread.php?49126-Printable-Price-list-support-thread</a></p>
 <div id="permissions">
-  <p><strong>Note:</strong> This plugin's file-set includes a new folder: <code>/includes/templates/template_default/pricelist</code>. If your store creates debug-log files similar to the following upon an access to <code>http://www.yourstore.com/index.php?main_page=pricelist</code>, you'll need to check the permissions assigned to this new folder and its associated files: 755 and 644, respectively.</p>
-  <p><br /><code>PHP Warning: require(includes/templates/template_default/templates/tpl_pricelist_default.php): failed to open stream: No such file or directory in {filesystem}/includes/templates/template_default/common/tpl_main_page.php on line xxx</code></p>
+  <p><strong>Note:</strong> This plugin's file-set includes a new folder: <code>/includes/templates/template_default/pricelist</code>. If your store creates debug-log files similar to the following upon an access to <code>http://www.example.com/index.php?main_page=pricelist</code>, you'll need to check the permissions assigned to this new folder and its associated files: 755 and 644, respectively.</p>
+  <p><br><code>PHP Warning: require(includes/templates/template_default/templates/tpl_pricelist_default.php): failed to open stream: No such file or directory in {filesystem}/includes/templates/template_default/common/tpl_main_page.php on line xxx</code></p>
 </div>
 
 <h3>Credits</h3>
@@ -69,7 +68,7 @@ img { margin-left: 20px; max-width: 95%; }
 
 <h3>Store-Side Configuration</h3>
 <img class="small_img" src="ppl_list.jpg" alt="Price-list Display" title="Price-list Display" />
-<p>From your Zen Cart store, you access the pricelist by navigating your browser to <code>http://www.yourdomain.com/index.php?main_page=pricelist</code>.  Alternative profiles can be accessed directly by adding the profile's ID to the URL: <code>http://www.yourdomain.com/index.php?main_page=pricelist&profile=3</code>.  If the price-list is installed solely for the store administrators' use, you're finished.</p>
+<p>From your Zen Cart store, you access the pricelist by navigating your browser to <code>https://www.example/index.php?main_page=pricelist</code>.  Alternative profiles can be accessed directly by adding the profile's ID to the URL: <code>https://www.example.com/index.php?main_page=pricelist&profile=3</code>.  If the price-list is installed solely for the store administrators' use, you're finished.</p>
 <p>If you want your customers to be able to access the price-list, you'll want to add a link to the price list:</p>
 <ol>
   <li>Using EZ-pages.  Set the <em>Internal Link URL</em> to <b>index.php?main_page=pricelist</b>.  You might want also to choose <em>Open New Window</em> to <b>Yes</b> since the price list is usually not integrated into the store's look-and-feel.</li>
@@ -101,7 +100,9 @@ img { margin-left: 20px; max-width: 95%; }
     <li>/includes/templates/template_default/pricelist/stylesheet.css</li>
     <li>/includes/templates/template_default/pricelist/tpl_box_default.php</li>
     <li>/includes/templates/template_default/sideboxes/tpl_main_page.php</li>
-    <li>/YOUR_ADMIN/includes/functions/extra_functions/init_price_list_admin.php</li>
+    <li>/YOUR_ADMIN/includes/auto_loaders/config.printable_price_list_admin.php <span class="smaller">(Added in v3.0.0)</span></li>
+    <li>/YOUR_ADMIN/includes/functions/extra_functions/init_price_list_admin.php <span class="smaller">(No longer used, v3.0.0 and later)</span></li>
+    <li>/YOUR_ADMIN/includes/init_includes/init_price_list_admin.php <span class="smaller">(Added in v3.0.0)</span></li>
     <li>/YOUR_ADMIN/includes/languages/english/extra_definitions/printable_pricelist_menu_definitions.php</li>
   </ol></li>
   <li>Refresh the screen in your Zen Cart admin console by clicking the &quot;Admin Home&quot; link; the configuration settings for the <em>Printable Price-list</em> will auto-install.</li>
@@ -110,6 +111,9 @@ img { margin-left: 20px; max-width: 95%; }
 <hr />
 <h2>Version History</h2>
 <ul>
+  <li>v3.0.0, 2021-11-13 (lat9):<ol>
+    <li>CHANGE: Minimum Zen Cart version is now zc157.</li>
+  </ol></li>
   <li>v2.0.3, 2016-01-24 (lat9):<ol>
     <li>BUGFIX: <em>Price (inc)</em> not properly calculating the included tax.</li>
   </ol></li>
