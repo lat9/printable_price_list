@@ -47,7 +47,7 @@ class price_list extends base
         // This array, one element per profile-specific configuration setting, contains three required and one optional element:
         //
         // [0] ... The configuration setting "key" name (suffixed with _x where x is the profile number)
-        // [1] ... The name of the class-based config array into which the setting value is stored
+        // [1] ... The name of the class-based config array element into which the setting's value is stored
         // [2] ... The "type" (bool, int, or char), to which the value is converted
         // [3] ... (optional) If not 'empty', contains the database element that should be retrieved for the display.
         //
@@ -128,7 +128,7 @@ class price_list extends base
         $this->currency_symbol = $currencies->currencies[$_SESSION['currency']]['symbol_left'] . $currencies->currencies[$_SESSION['currency']]['symbol_right'];
     }
 
-    public function initialize_pricelist_rows()
+    protected function initialize_pricelist_rows()
     {
         global $db;
 
@@ -143,7 +143,7 @@ class price_list extends base
         }
     }
 
-    public function build_rows($parent_category = 0, $level = 1)
+    protected function build_rows($parent_category = 0, $level = 1)
     {
         global $db;
         $result = $db->Execute(
@@ -167,7 +167,7 @@ class price_list extends base
         }
     }
 
-    public function get_products_in_category($categories_id)
+    protected function get_products_in_category($categories_id)
     {
         global $db;
 
