@@ -17,16 +17,16 @@ if ($messageStack->size('header') > 0) {
         <div id="screenIntroPL">
 <?php
 if ($price_list->config['show_logo']) {
-    echo '<a href="' . zen_href_link(FILENAME_DEFAULT) . '">' . zen_image($template->get_template_dir (HEADER_LOGO_IMAGE, DIR_WS_TEMPLATE, $current_page_base, 'images') . '/' . HEADER_LOGO_IMAGE, HEADER_ALT_TEXT) . '</a>';
+    echo '<a href="' . zen_href_link(FILENAME_DEFAULT) . '">' . zen_image($template->get_template_dir(HEADER_LOGO_IMAGE, DIR_WS_TEMPLATE, $current_page_base, 'images') . '/' . HEADER_LOGO_IMAGE, HEADER_ALT_TEXT) . '</a>';
 }
 ?>
-            <h3><?php echo sprintf (TEXT_PL_HEADER_TITLE, '<a href="' . zen_href_link(FILENAME_DEFAULT) . '">' . TITLE . '</a>'); ?></h3>
-            <p><?php echo sprintf (TEXT_PL_SCREEN_INTRO, $price_list->product_count); ?></p>
+            <h3><?php echo sprintf(TEXT_PL_HEADER_TITLE, '<a href="' . zen_href_link(FILENAME_DEFAULT) . '">' . TITLE . '</a>'); ?></h3>
+            <p><?php echo sprintf(TEXT_PL_SCREEN_INTRO, $price_list->product_count); ?></p>
         </div>
 <?php
 
 if (PL_SHOW_PROFILES === 'true') {
-    $profiles_list = $price_list->get_profiles ();
+    $profiles_list = $price_list->get_profiles();
     if ($profiles_list != '') {
         echo '<div id="profilesListPL">' . $profiles_list . '</div>' . "\n";
     }
@@ -77,13 +77,13 @@ if (!$price_list->group_is_valid($price_list->current_profile)) {
         if ($price_list->config['show_headers']) {
 ?>
                     <div class="headPL">
-                        <a href="<?php echo zen_href_link (FILENAME_DEFAULT); ?>"><?php echo zen_image ($template->get_template_dir (HEADER_LOGO_IMAGE, DIR_WS_TEMPLATE, $current_page_base, 'images'). '/' . HEADER_LOGO_IMAGE, HEADER_ALT_TEXT); ?></a>
-                        <h4 class="headerTitlePrintPL"><?php echo sprintf (TEXT_PL_HEADER_TITLE_PRINT , '<a href="' . zen_href_link (FILENAME_DEFAULT) . '">' . TITLE . '</a>'); ?></h4>
+                        <a href="<?php echo zen_href_link(FILENAME_DEFAULT); ?>"><?php echo zen_image($template->get_template_dir(HEADER_LOGO_IMAGE, DIR_WS_TEMPLATE, $current_page_base, 'images'). '/' . HEADER_LOGO_IMAGE, HEADER_ALT_TEXT); ?></a>
+                        <h4 class="headerTitlePrintPL"><?php echo sprintf(TEXT_PL_HEADER_TITLE_PRINT , '<a href="' . zen_href_link(FILENAME_DEFAULT) . '">' . TITLE . '</a>'); ?></h4>
                     </div>
 <?php
         }
 ?>
-                    <div class="datePL"><?php echo strftime (DATE_FORMAT_LONG); ?></div>
+                    <div class="datePL"><?php echo strftime(DATE_FORMAT_LONG); ?></div>
                     <div id="print-me"><a href="javascript:window.print();"><?php echo PL_PRINT_ME; ?></a></div>
                     <div class="clearBoth"></div>
                 </td>
@@ -172,15 +172,17 @@ if (!$price_list->group_is_valid($price_list->current_profile)) {
                 }
             } else {
                 $products_id = $current_row['products_id'];
-                $products_price_inc = $price_list->display_price($current_row['products_price'], zen_get_tax_rate($current_row['products_tax_class_id']));
-                $products_price_ex = $price_list->display_price($current_row['products_price']);
+                if ($price_list->config['show_price'] || $price_list->config['show_taxfree']) {
+                    $products_price_inc = $price_list->display_price($current_row['products_price'], zen_get_tax_rate($current_row['products_tax_class_id']));
+                    $products_price_ex = $price_list->display_price($current_row['products_price']);
+                }
                 // $specials_price_only=false multiplies the number of queries per product!!
                 //function zen_get_products_special_price($product_id, $specials_price_only=false)
                 $special_price_ex = ($price_list->config['show_special_price']) ? zen_get_products_special_price($products_id, true) : '';
                 if (!empty($special_price_ex)) {
                     $special_price_inc = $price_list->display_price($special_price_ex, zen_get_tax_rate($current_row['products_tax_class_id']));
                     $special_price_ex = $price_list->display_price($special_price_ex);
-                    $special_date = ($price_list->config['show_special_date']) ? $price_list->get_products_special_dat ($products_id) : '';
+                    $special_date = ($price_list->config['show_special_date']) ? $price_list->get_products_special_date($products_id) : '';
                 }
 
                 if (($price_list->config['show_inactive'] && $current_row['products_status'] == 0) || $current_row['categories_status'] == 0) {
@@ -193,7 +195,7 @@ if (!$price_list->group_is_valid($price_list->current_profile)) {
             <tr>
                 <td class="prdPL">
                     <div>
-                        <a href="<?php echo zen_href_link (zen_get_info_page ($products_id), 'products_id=' . $products_id); ?>" target="_blank"><?php echo $current_row['products_name']; ?></a>
+                        <a href="<?php echo zen_href_link(zen_get_info_page($products_id), 'products_id=' . $products_id); ?>" target="_blank"><?php echo $current_row['products_name']; ?></a>
                     </div>
                 </td>
 <?php
@@ -267,7 +269,7 @@ if (!$price_list->group_is_valid($price_list->current_profile)) {
                     }
 ?>
             <tr>
-                <td class="splDatePL" colspan="<?php echo $colspan; ?>"><?php echo (zen_not_null ($special_date)) ? (TEXT_PL_AVAIL_TILL . $special_date) : TEXT_PL_SPECIAL; ?></td>
+                <td class="splDatePL" colspan="<?php echo $colspan; ?>"><?php echo (!empty($special_date)) ? (TEXT_PL_AVAIL_TILL . $special_date) : TEXT_PL_SPECIAL; ?></td>
 <?php
                     if ($price_list->config['show_price']) {
                         echo '<td class="splPL">' . $special_price_inc . '</td>' . "\n";
@@ -295,8 +297,8 @@ if (!$price_list->group_is_valid($price_list->current_profile)) {
                         echo zen_image (DIR_WS_IMAGES . $current_row['products_image'], '', $price_list->config['image_width'], $price_list->config['image_height'], 'class="imgPL"');
                     }
                     if ($price_list->config['show_description']) {
-                        if ($price_list->config['truncate_desc'] > 0 && strlen ($current_row['products_description']) == $price_list->config['truncate_desc']) {
-                            echo zen_clean_html ($current_row['products_description']) . '<a href="' . zen_href_link (zen_get_info_page ($current_row['products_id']), 'products_id=' . $current_row['products_id']) . '"> ' . MORE_INFO_TEXT . '</a>';
+                        if ($price_list->config['truncate_desc'] > 0 && strlen($current_row['products_description']) == $price_list->config['truncate_desc']) {
+                            echo zen_clean_html($current_row['products_description']) . '<a href="' . zen_href_link(zen_get_info_page ($current_row['products_id']), 'products_id=' . $current_row['products_id']) . '"> ' . MORE_INFO_TEXT . '</a>';
                         } else {
                             echo $current_row['products_description'];
                         }
