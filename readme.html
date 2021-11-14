@@ -27,7 +27,7 @@ img { margin-left: 20px; max-width: 95%; }
 
 <body>
 <h1>Printable Price List &mdash;  for Zen Cart v1.5.7 and later</h1>
-<h3>Version 2.0.3.  <span class="smaller">Copyright &copy; 2014-2021, Vinos de Frutas Tropicales</span></h3>
+<h3>Version 3.0.0.  <span class="smaller">Copyright &copy; 2014-2021, Vinos de Frutas Tropicales</span></h3>
 <p>Current Support Thread at Zen Cart Forums: <a href="https://www.zen-cart.com/showthread.php?49126-Printable-Price-list-support-thread" target="_blank">https://www.zen-cart.com/showthread.php?49126-Printable-Price-list-support-thread</a></p>
 <div id="permissions">
   <p><strong>Note:</strong> This plugin's file-set includes a new folder: <code>/includes/templates/template_default/pricelist</code>. If your store creates debug-log files similar to the following upon an access to <code>http://www.example.com/index.php?main_page=pricelist</code>, you'll need to check the permissions assigned to this new folder and its associated files: 755 and 644, respectively.</p>
@@ -111,8 +111,9 @@ img { margin-left: 20px; max-width: 95%; }
 <hr />
 <h2>Version History</h2>
 <ul>
-  <li>v3.0.0, 2021-11-13 (lat9):<ol>
+  <li>v3.0.0, 2021-11-14 (lat9):<ol>
     <li>CHANGE: Minimum Zen Cart version is now zc157.</li>
+    <li>BUGFIX: Include 'date_added' when creating initial configuration settings.</li>
   </ol></li>
   <li>v2.0.3, 2016-01-24 (lat9):<ol>
     <li>BUGFIX: <em>Price (inc)</em> not properly calculating the included tax.</li>
