@@ -33,12 +33,15 @@ if (PL_SHOW_PROFILES === 'true') {
 } 
 if ($price_list->config['show_boxes']) {
     $column_box_default = 'tpl_box_default.php';
-    $cat_tree = ($price_list->config['main_cats_only']) ? $price_list->get_category_list(0, '', '', '', false, true) : $price_list->get_category_list();
 ?>
         <table id="boxesPL">
             <tr>
-                <td><?php $box_id = 'languagesPL'; require(DIR_WS_MODULES . 'sideboxes/' . 'languages.php') ?></td>
-                <td><?php $box_id = 'currenciesPL'; require(DIR_WS_MODULES . 'sideboxes/' . 'currencies.php') ?></td>  
+                <td><?php $box_id = 'languagesPL'; require DIR_WS_MODULES . 'sideboxes/' . 'languages.php'; ?></td>
+                <td><?php $box_id = 'currenciesPL'; require DIR_WS_MODULES . 'sideboxes/' . 'currencies.php'; ?></td>
+<?php
+    if ($price_list->config['included_products'] === 'all') {
+        $cat_tree = ($price_list->config['main_cats_only']) ? $price_list->get_category_list(0, '', '', '', false, true) : $price_list->get_category_list();
+?>
                 <td>
                     <div id="categoriesPLContent" class="sideBoxContent centeredContent">
                         <?php echo 
@@ -49,6 +52,9 @@ if ($price_list->config['show_boxes']) {
                             '</form>'; ?>
                     </div>
                 </td>
+<?php
+    }
+?>
             </tr>
         </table>
 <?php
@@ -162,11 +168,13 @@ if (!$price_list->group_is_valid($price_list->current_profile)) {
         $found_main_cat = false;
         foreach ($price_list->rows as $current_row) {
             if (!$current_row['is_product']) {
+                if ($current_row['product_count'] !== 0) {
 ?>
             <tr class="scPL-<?php echo $current_row['level'] . (($price_list->config['maincats_new_page'] && $current_row['level'] == 1 && $found_main_cat) ? ' new-page' : ''); ?>">
                 <th colspan="<?php echo $price_list->header_columns; ?>"><?php echo $current_row['categories_name']; ?></th>
             </tr>
 <?php
+                }
                 if ($current_row['level'] == 1) {
                     $found_main_cat = true;
                 }

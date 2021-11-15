@@ -100,7 +100,7 @@ for ($profile = 1; $profile <= 3; $profile++) {
 
                 ('Show Selections?', 'PL_SHOW_BOXES_$profile', 'true', 'Set this value to <em>true</em> to display language and currency selections as well as a categories dropdown menu.', $cgi, 35, NULL, 'zen_cfg_select_option(array(\'true\', \'false\'),', now()),
 
-                ('Categories Dropdown: Main Only?', 'PL_CATEGORY_TREE_MAIN_CATS_ONLY_$profile', 'true', 'Should the categories dropdown menu contain <em>only</em> the mail categories?  If set to <em>false</em>, then <b>all</b> categories are displayed.  <b>Note:</b> This setting is ignored if <em>Show Selections</em> is set to <em>false</em>', $cgi, 37, NULL, 'zen_cfg_select_option(array(\'true\', \'false\'),', now()),
+                ('Categories Dropdown: Main Only?', 'PL_CATEGORY_TREE_MAIN_CATS_ONLY_$profile', 'true', 'Should the categories dropdown menu contain <em>only</em> the main categories?  If set to <em>false</em>, then <b>all</b> categories are displayed.  <b>Note:</b> This setting is ignored if <em>Show Selections</em> is set to <em>false</em>', $cgi, 37, NULL, 'zen_cfg_select_option(array(\'true\', \'false\'),', now()),
 
                 ('Main Categories: New Page', 'PL_MAINCATS_NEW_PAGE_$profile', 'false', 'If true, main categories on the printed price-list will start on a new page.', $cgi, 40, NULL, 'zen_cfg_select_option(array(\'true\', \'false\'),', now()),
 
@@ -155,6 +155,22 @@ for ($profile = 1; $profile <= 3; $profile++) {
                 ('Show Page Footers?', 'PL_SHOW_PRICELIST_PAGE_FOOTERS_$profile', 'true', 'If true the page footers on each page are shown (screen and print).', $cgi, 280, NULL, 'zen_cfg_select_option(array(\'true\', \'false\'),', now())"
         );
     }
+
+    // -----
+    // Added in v3.0.0 of the plugin, additional per-pricelist configuration settings to define the 'type' of products to be
+    // displayed and, if the 'type' indicates a specific category list, the top-level category to be included.
+    //
+    if (!defined("PL_INCLUDED_PRODUCTS_$profile")) {
+        $db->Execute(
+            "INSERT INTO " . TABLE_CONFIGURATION . "
+                (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added)
+             VALUES
+                ('Products to include?', 'PL_INCLUDED_PRODUCTS_$profile', 'all', 'Choose the products to be included in this price-list:<ul><li><b>all</b>: Displays all products</li><li><b>featured</b>: Displays all currently-featured products <em>only</em>.</li><li><b>specials</b>: Displays all products on special.</li><li><b>category</b>: Displays products associated with the category identified in the <em>Starting Category</em> setting, below.</li></ul>', $cgi, 25, NULL, 'zen_cfg_select_option(array(\'all\', \'featured\', \'specials\', \'category\'),', now()),
+
+                ('Starting Category', 'PL_START_CATEGORY_$profile', '0', 'If including only products from a specific category, identify that <code>categories_id</code> here.', $cgi, 26, NULL, NULL, now())"
+        );
+    }
+
     if (!zen_page_key_exists("configPricelistProfile$profile")) {
         zen_register_admin_page("configPricelistProfile$profile", "BOX_CONFIGURATION_PL_$profile", 'FILENAME_CONFIGURATION', "gID=$cgi", 'configuration', 'Y', $cgi);
     }

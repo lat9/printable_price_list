@@ -32,16 +32,22 @@ class price_list extends base
 
         $this->product_count = 0;
 
-        // -----
-        // If a category has been selected from the template page's dropdown, remember it!
-        //
-        $this->current_category = (isset($_GET['plCat'])) ? ((int)$_GET['plCat']) : 0;
-
         $this->current_profile = (isset($_GET['profile'])) ? ((int)$_GET['profile']) : PL_DEFAULT_PROFILE;
         if (!defined('PL_ENABLE_' . $this->current_profile)) {
             $this->current_profile = PL_DEFAULT_PROFILE;
         }
         $this->enabled = (constant('PL_ENABLE_' . $this->current_profile) === 'true');
+
+        // -----
+        // A couple of additional configuration settings were added for v3.0.0 of the plugin.  Make sure
+        // that they're defined prior to use (in case the admin hasn't updated yet).
+        //
+        if (!defined('PL_INCLUDED_PRODUCTS_' . $this->current_profile)) {
+            define('PL_INCLUDED_PRODUCTS_', $this->current_profile, 'all');
+        }
+        if (!defined('PL_START_CATEGORY_' . $this->current_profile)) {
+            define('PL_START_CATEGORY_' . $this->current_profile, '0');
+        }
 
         // -----
         // This array, one element per profile-specific configuration setting, contains three required and one optional element:
@@ -54,6 +60,8 @@ class price_list extends base
         $profile_settings = [
             ['PL_GROUP_NAME', 'group_name', 'char', ''],
             ['PL_PROFILE_NAME', 'profile_name', 'char', ''],
+            ['PL_INCLUDED_PRODUCTS', 'included_products', 'char', ''],
+            ['PL_START_CATEGORY', 'start_category', 'char', ''],
             ['PL_USE_MASTER_CATS_ONLY', 'master_cats_only', 'bool', ''],
             ['PL_SHOW_BOXES', 'show_boxes', 'bool', ''],
             ['PL_CATEGORY_TREE_MAIN_CATS_ONLY', 'main_cats_only', 'bool', ''],
@@ -110,6 +118,16 @@ class price_list extends base
         $this->products_sort_by = (($this->config['sort_by'] == 'products_name') ? 'pd.' : 'p.') . $this->config['sort_by'];
 
         // -----
+        // If *all* categories are to be displayed and a category has been selected from the template page's dropdown, remember it!
+        //
+        $this->current_category = 0;
+        if ($this->config['included_products'] === 'all' && isset($_GET['plCat'])) {
+            $this->current_category = (int)$_GET['plCat'];
+        } elseif ($this->config['included_products'] === 'category') {
+            $this->current_category = (int)constant('PL_START_CATEGORY_' . $this->current_profile);
+        }
+
+        // -----
         // Initialize categories and products to be displayed (updates $this->rows).
         //
         $this->initialize_pricelist_rows();
@@ -132,11 +150,20 @@ class price_list extends base
     {
         global $db;
 
-        $this->categories_status_clause = $this->products_status_clause = '';
+        $this->categories_status_clause = $this->products_status_clause = $this->additional_joins = '';
         if (!$this->config['show_inactive']) {
             $this->categories_status_clause = ' AND c.categories_status = 1 ';
             $this->products_status_clause = ' AND p.products_status = 1';
         }
+
+        if ($this->config['included_products'] === 'featured') {
+            $this->additional_joins = ' LEFT JOIN ' . TABLE_FEATURED . ' AS f USING(products_id) ';
+            $this->products_status_clause .= ' AND f.status = 1';
+        } elseif ($this->config['included_products'] === 'specials') {
+            $this->additional_joins = ' LEFT JOIN ' . TABLE_SPECIALS . ' AS s USING(products_id) ';
+            $this->products_status_clause .= ' AND s.status = 1';
+        }
+
         $this->rows = [];
         if ($this->enabled) {
             $this->build_rows($this->current_category);
@@ -153,9 +180,12 @@ class price_list extends base
                 AND c.categories_id = cd.categories_id 
                 AND cd.language_id = " . $_SESSION['languages_id'] . $this->categories_status_clause . " 
               ORDER BY c.parent_id, c.sort_order, cd.categories_name"
-        );   
+        );
+        $parent_index = count($this->rows) - 1;
+        $current_product_count = $this->product_count;
         if ($result->EOF) {
-            $this->get_products_in_category($parent_category);
+            $category_index = count($this->rows) - 1;
+            $this->rows[$category_index]['product_count'] = $this->get_products_in_category($parent_category);
         } else {
             foreach ($result as $fields) {
                 $fields['level'] = $level;
@@ -164,6 +194,9 @@ class price_list extends base
                 $this->build_rows($fields['categories_id'], $level+1);
             }
             unset($result, $fields);
+        }
+        if ($parent_index !== -1) {
+            $this->rows[$parent_index]['product_count'] = $this->product_count - $current_product_count;
         }
     }
 
@@ -178,15 +211,18 @@ class price_list extends base
             " FROM " . TABLE_PRODUCTS . " p
                 LEFT JOIN " . TABLE_PRODUCTS_DESCRIPTION . " pd USING(products_id)
                 LEFT JOIN " . TABLE_PRODUCTS_TO_CATEGORIES . " pc USING(products_id)
-                LEFT JOIN " . TABLE_CATEGORIES . " c USING(categories_id)
+                LEFT JOIN " . TABLE_CATEGORIES . " c USING(categories_id) " .
+                $this->additional_joins . "
              WHERE pd.language_id = " . $_SESSION['languages_id'] . $categories_clause . $this->products_status_clause . $this->categories_status_clause;
         $query .= ' ORDER BY ' . $this->products_sort_by  . ' ' . $this->config['sort_dir'];
         $result = $db->Execute($query);
+        $current_product_count = $this->product_count;
         foreach ($result as $fields) {
             $fields['is_product'] = true;
             $this->rows[] = $fields;
             $this->product_count++;
         }
+        return $this->product_count - $current_product_count;
     }
 
     // -----
