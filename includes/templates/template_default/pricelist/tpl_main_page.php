@@ -172,9 +172,15 @@ if (!$price_list->group_is_valid($price_list->current_profile)) {
                 }
             } else {
                 $products_id = $current_row['products_id'];
+                
+                // -----
+                // If the price-list is to display products' pricing (either inc or ex), get the product's 'base' price
+                // for the display.  That'll include any attribute-based pricing, too.
+                //
                 if ($price_list->config['show_price'] || $price_list->config['show_taxfree']) {
-                    $products_price_inc = $price_list->display_price($current_row['products_price'], zen_get_tax_rate($current_row['products_tax_class_id']));
-                    $products_price_ex = $price_list->display_price($current_row['products_price']);
+                    $products_base_price = zen_get_products_base_price($products_id);
+                    $products_price_inc = $price_list->display_price($products_base_price, zen_get_tax_rate($current_row['products_tax_class_id']));
+                    $products_price_ex = $price_list->display_price($products_base_price);
                 }
                 // $specials_price_only=false multiplies the number of queries per product!!
                 //function zen_get_products_special_price($product_id, $specials_price_only=false)
