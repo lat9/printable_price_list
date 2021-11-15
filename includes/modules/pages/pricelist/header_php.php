@@ -188,7 +188,7 @@ class price_list extends base
             $this->product_count++;
         }
     }
-  
+
     // -----
     // If a GROUP_NAME is defined for the profile, make sure that the customer is authorized to view the price-list profile.
     //
@@ -276,12 +276,16 @@ class price_list extends base
     }
 
     // -----
-    // Return the price, without either the left- or right-currency symbol.
+    // Return the price, without either the left- or right-currency symbol.  Prices are calculated with
+    // tax **only if** the site's configured to display prices with tax.
     //
     public function display_price($price_raw, $tax_percentage = 0)
     {
         global $currencies;
 
+        if (DISPLAY_PRICE_WITH_TAX !== 'true') {
+            $tax_percentage = 0;
+        }
         $price = $currencies->format($price_raw * (1 + $tax_percentage / 100));
         $price = str_replace([$currencies->currencies[$_SESSION['currency']]['symbol_left'], $currencies->currencies[$_SESSION['currency']]['symbol_right']], '', $price);
 
