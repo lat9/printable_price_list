@@ -39,6 +39,7 @@ table.colWrapPL td { vertical-align: top; }
 .imgPL { float: left; margin-right: 1rem; }
 .prcPL s { display: none; }
 .splPL { color: red; }
+.wgtPL { text-align: center; }
 .pagePL, .pageOnePL { color: black; background-color: white; width: 95%; margin: 0 auto; border: 1px blue solid; position: relative; }
 .headPL { float: left; }
 .footPL { font-size: 0.9em; width: 100%; text-align: center; }

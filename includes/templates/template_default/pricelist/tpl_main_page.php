@@ -317,7 +317,7 @@ if (!$price_list->group_is_valid($price_list->current_profile)) {
                 // stock by bmoroney
                 if ($price_list->config['show_stock']) {
 ?>
-                    <td class="sohPL"><div><?php echo $current_row['products_quantity']; ?></div></td>
+                    <td class="sohPL"><div><?php echo ($current_row['products_quantity'] > 0) ? $current_row['products_quantity'] : 0; ?></div></td>
 <?php
                 }
                 if ($price_list->config['show_notes_a']) {
@@ -360,8 +360,8 @@ if (!$price_list->group_is_valid($price_list->current_profile)) {
                         echo
                             zen_draw_form('cart_quantity', zen_href_link($products_info_page, zen_get_all_get_params(['action']) . 'action=add_product'), 'post', 'enctype="multipart/form-data" target="' . $price_list->config['add_cart_target'] . '" class="AddButtonBox"') . PHP_EOL .
                             PRODUCTS_ORDER_QTY_TEXT . '<input type="text" name="cart_quantity" value="' . (zen_get_buy_now_qty($products_id)) . '" maxlength="6" size="4" /><br>' .
-                            zen_get_products_quantity_min_units_display ((int)$products_id) . '<br>' .
-                            zen_draw_hidden_field('products_id', (int)$products_id) .
+                            zen_get_products_quantity_min_units_display($products_id) . '<br>' .
+                            zen_draw_hidden_field('products_id', $products_id) .
                             zen_image_submit(BUTTON_IMAGE_IN_CART, BUTTON_IN_CART_ALT) .
                             '</form>';
 ?>
