@@ -117,7 +117,7 @@ class price_list extends base
         if ($this->config['show_description']) {
             $this->product_database_fields .= ($this->config['truncate_desc'] === 0) ? 'pd.products_description' : ('SUBSTR(pd.products_description, 1, ' . (int)$this->config['truncate_desc'] . ') AS products_description');
         }
-        $this->product_database_fields = rtrim($this->product_database_fields, ',');  //-String trailing ','
+        $this->product_database_fields = rtrim($this->product_database_fields, ',');  //-Strip trailing ','
 
         $this->products_sort_by = (($this->config['sort_by'] == 'products_name') ? 'pd.' : 'p.') . $this->config['sort_by'];
 

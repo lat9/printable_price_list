@@ -8,7 +8,7 @@ h1 { color: #e00; font-family: Verdana, sans-serif; }
 img { border-style: none; } 
 
 table { margin: 0 auto; }
-.pl-attr-table { margin: 0; width: 100%; }
+.pl-attr-table { margin: 0; width: 100%; background-color: #fff; }
 tfoot { background-color: #dcdcdc; }
 
 /* profiles navigation */
@@ -27,7 +27,7 @@ div#profilesListPL ul li.selectedPL a { color: white !important; background-colo
 #optionsPL { background: #ffe; font-size: 10pt; }
 #boxesPL td form{ margin: 0; padding: 0; }
 .notSplPL { text-decoration: line-through; }
-.inactivePL td { font-style: italic; font-weight: lighter; }
+.inactivePL td { font-style: italic; font-weight: lighter; color: red; }
 .selectionPL, .selectionPl table { margin: 5px auto; text-align: center; }
 .selectionPl table { border: 1px solid silver; background: #aef; }
 

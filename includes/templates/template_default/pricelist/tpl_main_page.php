@@ -203,7 +203,14 @@ if (!$price_list->group_is_valid($price_list->current_profile)) {
 ?>
             <tr class="inactivePL">
                 <td class="prdPL">
-                    <div><?php echo $products_name; ?></div>
+                    <div>
+<?php
+                    if ($price_list->config['show_image']){
+                        echo zen_image(DIR_WS_IMAGES . $current_row['products_image'], $products_name, $price_list->config['image_width'], $price_list->config['image_height'], 'class="imgPL"');
+                    }
+                    echo $products_name;
+?>
+                    </div>
                 </td>
 <?php
                 } else {
