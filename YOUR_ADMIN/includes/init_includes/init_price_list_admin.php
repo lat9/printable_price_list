@@ -136,7 +136,7 @@ for ($profile = 1; $profile <= 3; $profile++) {
 
                 ('Image Width', 'PL_IMAGE_PRODUCT_WIDTH_$profile', '100', 'If the product images are to be displayed, what is the width of each image?', $cgi, 170, NULL, NULL, now()),
 
-                ('Show Descriptions?', 'PL_SHOW_DESCRIPTION_$profile', 'false', 'Diaplay each product\'s description?', $cgi, 175, NULL, 'zen_cfg_select_option(array(\'true\', \'false\'),', now()),
+                ('Show Descriptions?', 'PL_SHOW_DESCRIPTION_$profile', 'false', 'Display each product\'s description?', $cgi, 175, NULL, 'zen_cfg_select_option(array(\'true\', \'false\'),', now()),
 
                 ('Truncate Descriptions?', 'PL_TRUNCATE_DESCRIPTION_$profile', '300', 'If <em>Show Descriptions?</em> is set to <b>true</b> and this field is a value other than 0 or blank, product descriptions will be truncated to this length &mdash; HTML will be stripped.', $cgi, 180, NULL, NULL, now()),
 
