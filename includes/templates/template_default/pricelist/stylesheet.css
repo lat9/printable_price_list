@@ -36,6 +36,7 @@ table.colWrapPL { margin: 0 auto; }
 table.colWrapPL td { vertical-align: top; }
 
 .datePL, #print-me { text-align: right; }
+.imgPL { float: left; margin-right: 1rem; }
 .prcPL s { display: none; }
 .splPL { color: red; }
 .pagePL, .pageOnePL { color: black; background-color: white; width: 95%; margin: 0 auto; border: 1px blue solid; position: relative; }
@@ -48,8 +49,6 @@ table.colWrapPL td { vertical-align: top; }
 /* bof added for image and description  */
 .imgDescrPL div { border: 0px double #ddd; border-width: 0 0 5px 0 !important; width: 100%; }
 .imgDescrPL div img { margin: 2px; }
-.imgDescrRndPL_3 img, .imgDescrRndPL_4 img { float: left; }
-.imgDescrRndPL_1 img, .imgDescrRndPL_2 img{ float: right; }
 
 .scPL-1 th { font-style: italic; font-weight: bold; color: red; text-align: center; background: #ff9; border: 1px solid #ddf; }
 .scPL-2 th { font-weight: bold; color: red; background: #ffd; border: 1px solid #ddf; text-align: left; text-indent: 2em; }

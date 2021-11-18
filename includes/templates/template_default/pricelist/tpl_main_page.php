@@ -199,7 +199,7 @@ if (!$price_list->group_is_valid($price_list->current_profile)) {
                     $special_date = ($price_list->config['show_special_date']) ? $price_list->get_products_special_date($products_id) : '';
                 }
 
-                if (($price_list->config['show_inactive'] && $current_row['products_status'] == 0) || $current_row['categories_status'] == 0) {
+                if (($price_list->config['show_inactive'] && $current_row['products_status'] === '0') || $current_row['categories_status'] === '0') {
 ?>
             <tr class="inactivePL">
                 <td class="prdPL">
@@ -207,11 +207,17 @@ if (!$price_list->group_is_valid($price_list->current_profile)) {
                 </td>
 <?php
                 } else {
+                    $products_info_page = zen_get_info_page($products_id);
 ?>
             <tr>
                 <td class="prdPL">
                     <div>
-                        <a href="<?php echo zen_href_link(zen_get_info_page($products_id), 'products_id=' . $products_id); ?>" target="_blank"><?php echo $products_name; ?></a>
+<?php
+                    if ($price_list->config['show_image']){
+                        echo zen_image(DIR_WS_IMAGES . $current_row['products_image'], $products_name, $price_list->config['image_width'], $price_list->config['image_height'], 'class="imgPL"');
+                    }
+?>
+                        <a href="<?php echo zen_href_link($products_info_page, 'products_id=' . $products_id); ?>" target="_blank"><?php echo $products_name; ?></a>
                     </div>
 <?php
                     // -----
@@ -333,11 +339,27 @@ if (!$price_list->group_is_valid($price_list->current_profile)) {
                 //Added by Vartan Kat on july 2007 for Add to cart button
                 if ($price_list->config['show_cart_button']) {
                     if (zen_has_product_attributes ($products_id) ) {
-                        echo '<td><a href="' . zen_href_link (zen_get_info_page($products_id), 'products_id=' . $products_id) . '" target="' . $price_list->config['add_cart_target'] . '" >' . MORE_INFO_TEXT . '</a></td>';
-            
+?>
+                    <td>
+                        <a href="<?php echo zen_href_link($products_info_page, 'products_id=' . $products_id); ?>" target="<?php echo $price_list->config['add_cart_target']; ?>">
+                            <?php echo MORE_INFO_TEXT; ?>
+                        </a>
+                    </td>
+<?php
                     } else {
-                        // show the quantity box
-                        echo '<td>' . zen_draw_form ('cart_quantity', zen_href_link (zen_get_info_page($products_id), zen_get_all_get_params (array('action')) . 'action=add_product'), 'post', 'enctype="multipart/form-data" target="' . $price_list->config['add_cart_target'] . '" class="AddButtonBox"') . "\n" . PRODUCTS_ORDER_QTY_TEXT . '<input type="text" name="cart_quantity" value="' . (zen_get_buy_now_qty($products_id)) . '" maxlength="6" size="4" /><br />' . zen_get_products_quantity_min_units_display ((int)$products_id) . '<br />' . zen_draw_hidden_field ('products_id', (int)$products_id) . zen_image_submit(BUTTON_IMAGE_IN_CART, BUTTON_IN_CART_ALT). '</form></td>';
+?>
+                    <td>
+<?php
+                        echo
+                            zen_draw_form('cart_quantity', zen_href_link($products_info_page, zen_get_all_get_params(['action']) . 'action=add_product'), 'post', 'enctype="multipart/form-data" target="' . $price_list->config['add_cart_target'] . '" class="AddButtonBox"') . PHP_EOL .
+                            PRODUCTS_ORDER_QTY_TEXT . '<input type="text" name="cart_quantity" value="' . (zen_get_buy_now_qty($products_id)) . '" maxlength="6" size="4" /><br>' .
+                            zen_get_products_quantity_min_units_display ((int)$products_id) . '<br>' .
+                            zen_draw_hidden_field('products_id', (int)$products_id) .
+                            zen_image_submit(BUTTON_IMAGE_IN_CART, BUTTON_IN_CART_ALT) .
+                            '</form>';
+?>
+                    </td>
+<?php
                     }
                 }
                 //End of Added by Vartan Kat on july 2007 for Add to cart button
@@ -367,29 +389,17 @@ if (!$price_list->group_is_valid($price_list->current_profile)) {
 <?php
                 }
 
-                if ($price_list->config['show_image'] || $price_list->config['show_description']) {
+                if ($price_list->config['show_description']) {
 ?>
             <tr>
-                <td class="imgDescrPL" colspan = "<?php echo $price_list->header_columns; ?>">
+                <td class="imgDescrPL" colspan="<?php echo $price_list->header_columns; ?>">
 <?php
-                    // add random class for nicer catalog images display
-                    $pl_random = rand(1, 4);
-                    // adding div wrapper for easier overflow etc
-?>
-                    <div class="imgDescrRndPL_<?php echo $pl_random; ?>">
-<?php
-                    if ($price_list->config['show_image']){
-                        echo zen_image (DIR_WS_IMAGES . $current_row['products_image'], '', $price_list->config['image_width'], $price_list->config['image_height'], 'class="imgPL"');
-                    }
-                    if ($price_list->config['show_description']) {
-                        if ($price_list->config['truncate_desc'] > 0 && strlen($current_row['products_description']) == $price_list->config['truncate_desc']) {
-                            echo zen_clean_html($current_row['products_description']) . '<a href="' . zen_href_link(zen_get_info_page ($current_row['products_id']), 'products_id=' . $current_row['products_id']) . '"> ' . MORE_INFO_TEXT . '</a>';
-                        } else {
-                            echo $current_row['products_description'];
-                        }
+                    if ($price_list->config['truncate_desc'] > 0 && strlen($current_row['products_description']) >= $price_list->config['truncate_desc']) {
+                        echo zen_clean_html($current_row['products_description']) . '<a href="' . zen_href_link($products_info_page, 'products_id=' . $products_id) . '">' . MORE_INFO_TEXT . '</a>';
+                    } else {
+                        echo $current_row['products_description'];
                     }
 ?>
-                    </div>
                 </td>
             </tr>
 <?php     
