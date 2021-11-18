@@ -170,6 +170,14 @@ for ($profile = 1; $profile <= 3; $profile++) {
                 ('Starting Category', 'PL_START_CATEGORY_$profile', '0', 'If including only products from a specific category, identify that <code>categories_id</code> here.', $cgi, 26, NULL, NULL, now())"
         );
     }
+    if (!defined("PL_SHOW_ATTRIBUTES_$profile")) {
+        $db->Execute(
+            "INSERT INTO " . TABLE_CONFIGURATION . "
+                (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added)
+             VALUES
+                ('Include attributes pricing?', 'PL_SHOW_ATTRIBUTES_$profile', 'false', 'Should any attribute-related pricing be listed for the products?', $cgi, 45, NULL, 'zen_cfg_select_option(array(\'true\', \'false\'),', now())"
+        );
+    }
 
     if (!zen_page_key_exists("configPricelistProfile$profile")) {
         zen_register_admin_page("configPricelistProfile$profile", "BOX_CONFIGURATION_PL_$profile", 'FILENAME_CONFIGURATION', "gID=$cgi", 'configuration', 'Y', $cgi);

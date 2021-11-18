@@ -8,6 +8,7 @@ h1 { color: #e00; font-family: Verdana, sans-serif; }
 img { border-style: none; } 
 
 table { margin: 0 auto; }
+.pl-attr-table { margin: 0; width: 100%; }
 tfoot { background-color: #dcdcdc; }
 
 /* profiles navigation */
@@ -41,6 +42,7 @@ table.colWrapPL td { vertical-align: top; }
 .headPL { float: left; }
 .footPL { font-size: 0.9em; width: 100%; text-align: center; }
 .colPL td, .colPL th { font-family: Verdana, sans-serif; font-size: 0.6em; border: #ddf solid 1px; padding: 2px 2px; }
+.pl-attr-table td { font-size: 0.9em; }
 .colhPL td { text-align: center; font-size: 0.55em; border-width: 0px; background-color: #f9f9f9; }
 
 /* bof added for image and description  */
@@ -63,4 +65,4 @@ td.prcPL , td.splPL, td.splDatePL, td.sohPL { text-align: right; }
   thead { display: table-header-group; }
   tbody { display: table-row-group; }
   tfoot { display: table-footer-group; }
-}    
+}

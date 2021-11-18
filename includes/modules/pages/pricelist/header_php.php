@@ -48,6 +48,9 @@ class price_list extends base
         if (!defined('PL_START_CATEGORY_' . $this->current_profile)) {
             define('PL_START_CATEGORY_' . $this->current_profile, '0');
         }
+        if (!defined('PL_SHOW_ATTRIBUTES_' . $this->current_profile)) {
+            define('PL_SHOW_ATTRIBUTES_' . $this->current_profile, 'false');
+        }
 
         // -----
         // This array, one element per profile-specific configuration setting, contains three required and one optional element:
@@ -66,6 +69,7 @@ class price_list extends base
             ['PL_SHOW_BOXES', 'show_boxes', 'bool', ''],
             ['PL_CATEGORY_TREE_MAIN_CATS_ONLY', 'main_cats_only', 'bool', ''],
             ['PL_MAINCATS_NEW_PAGE', 'maincats_new_page', 'bool', ''],
+            ['PL_SHOW_ATTRIBUTES', 'show_attributes', 'bool', ''],
             ['PL_NOWRAP', 'nowrap', 'bool', ''],
             ['PL_SHOW_MODEL', 'show_model', 'bool-col', 'p.products_model'],
             ['PL_SHOW_MANUFACTURER', 'show_manufacturer', 'bool-col', 'p.manufacturers_id'],
@@ -206,19 +210,111 @@ class price_list extends base
 
         $categories_clause = ($this->config['master_cats_only']) ? " AND p.master_categories_id=$categories_id " : " AND c.categories_id=$categories_id ";
         $query = 
-            'SELECT c.categories_id, c.categories_status, p.products_id, p.products_tax_class_id, p.products_status, pd.products_name, ' . $this->product_database_fields;
-        $query .= 
-            " FROM " . TABLE_PRODUCTS . " p
-                LEFT JOIN " . TABLE_PRODUCTS_DESCRIPTION . " pd USING(products_id)
-                LEFT JOIN " . TABLE_PRODUCTS_TO_CATEGORIES . " pc USING(products_id)
-                LEFT JOIN " . TABLE_CATEGORIES . " c USING(categories_id) " .
-                $this->additional_joins . "
-             WHERE pd.language_id = " . $_SESSION['languages_id'] . $categories_clause . $this->products_status_clause . $this->categories_status_clause;
-        $query .= ' ORDER BY ' . $this->products_sort_by  . ' ' . $this->config['sort_dir'];
+            "SELECT c.categories_id, c.categories_status, 
+                    p.products_id, p.products_tax_class_id, p.products_status, p.products_priced_by_attribute, p.product_is_free,
+                    pd.products_name, " . $this->product_database_fields . "
+               FROM " . TABLE_PRODUCTS . " p
+                    LEFT JOIN " . TABLE_PRODUCTS_DESCRIPTION . " pd USING(products_id)
+                    LEFT JOIN " . TABLE_PRODUCTS_TO_CATEGORIES . " pc USING(products_id)
+                    LEFT JOIN " . TABLE_CATEGORIES . " c USING(categories_id) " .
+                    $this->additional_joins . "
+             WHERE pd.language_id = " . $_SESSION['languages_id'] . 
+                $categories_clause . 
+                $this->products_status_clause . 
+                $this->categories_status_clause . "
+             ORDER BY " . $this->products_sort_by  . ' ' . $this->config['sort_dir'];
         $result = $db->Execute($query);
         $current_product_count = $this->product_count;
         foreach ($result as $fields) {
             $fields['is_product'] = true;
+            if ($this->config['show_attributes']) {
+                if (PRODUCTS_OPTIONS_SORT_ORDER == '0') {
+                    $order_by = ' ORDER BY LPAD(po.products_options_sort_order,11,"0"), po.products_options_name';
+                } else {
+                    $order_by = ' ORDER BY po.products_options_name';
+                }
+                if (PRODUCTS_OPTIONS_SORT_BY_PRICE === '1') {
+                    $order_by .= ', LPAD(pa.products_options_sort_order,11,"0"), pov.products_options_values_name';
+                } else {
+                    $order_by .= ',  LPAD(pa.products_options_sort_order,11,"0"), pa.options_values_price';
+                }
+                $attributes = $db->Execute(
+                    "SELECT po.products_options_name, po.products_options_type, pov.products_options_values_name, pa.*
+                       FROM  " . TABLE_PRODUCTS_ATTRIBUTES . " pa
+                            LEFT JOIN " . TABLE_PRODUCTS_OPTIONS_VALUES . " pov
+                                ON pa.options_values_id = pov.products_options_values_id
+                               AND pov.language_id = " . $_SESSION['languages_id'] . "
+                            LEFT JOIN " . TABLE_PRODUCTS_OPTIONS . " po
+                                ON pa.options_id = po.products_options_id
+                               AND po.language_id = " . $_SESSION['languages_id'] . "
+                      WHERE pa.products_id = " . $fields['products_id'] . "
+                        AND pa.attributes_display_only != 1" . $order_by
+                );
+
+                $fields['attributes'] = [];
+                $options_id = false;
+                $product_priced_by_attributes = ($fields['products_priced_by_attribute'] === '1');
+                $product_is_free = ($fields['product_is_free'] === '1');
+                foreach ($attributes as $next_variant) {
+                    if ($options_id !== $next_variant['options_id']) {
+                        $options_id = $next_variant['options_id'];
+                        $fields['attributes'][$options_id] = [
+                            'name' => $next_variant['products_options_name'],
+                            'discounts_available' => false,
+                            'option_type' => $next_variant['products_options_type'],
+                            'values' => []
+                        ];
+                    }
+
+                    if (!empty($next_variant['attributes_qty_prices']) || !empty($next_variant['attributes_qty_prices_onetime'])) {
+                        $fields['attributes'][$options_id]['discounts_available'] = true;
+                    }
+
+                    $variant_values = [
+                        'name' => $next_variant['products_options_values_name'],
+                        'price_prefix' => $next_variant['price_prefix'],
+                        'is_free' => ($next_variant['product_attribute_is_free'] === '1'),
+                        'included_in_base' => ($next_variant['attributes_price_base_included'] === '1'),
+                    ];
+
+                    // -----
+                    // TEXT-type variants might include per-word or per-letter pricing.
+                    //
+                    if ($next_variant['products_options_type'] === '1') {
+                        $text_values = [
+                            'price_per_word' => ($next_variant['attributes_price_words'] === '0.0000') ? 0 : $next_variant['attributes_price_words'],
+                            'free_words' => $next_variant['attributes_price_words_free'],
+                            'price_per_letter' => ($next_variant['attributes_price_letters'] === '0.0000') ? 0 : $next_variant['attributes_price_letters'],
+                            'free_letters' => $next_variant['attributes_price_letters_free'],
+                        ];
+                        $variant_values = array_merge($variant_values, $text_values);
+                    }
+
+                    if ($next_variant['attributes_discounted'] === '1') {
+                        $variant_values['price'] = zen_get_attributes_price_final($next_variant['products_attributes_id'], 1, '', 'false', $product_priced_by_attributes);
+                    } else {
+                        $variant_values['price'] = $next_variant['options_values_price'];
+
+                        // -----
+                        // If the attribute's price is 0, set it to an (int) 0 so that follow-on checks
+                        // using empty() will find that value 'empty'.
+                        //
+                        if ($variant_values['price'] === '0.0000') {
+                            $variant_values['price'] = 0;
+                        }
+                        if ($variant_values['price'] < 0) {
+                            $variant_values['price'] = -$variant_values['price'];
+                        }
+
+                        if ($next_variant['attributes_price_onetime'] !== '0.0000' || $next_variant['attributes_price_factor_onetime'] !== '0.0000') {
+                            $variant_values['onetime'] = zen_get_attributes_price_final_onetime($next_variant['products_attributes_id'], 1, '');
+                        } else {
+                            $variant_values['onetime'] = false;
+                        }
+                    }
+                    $fields['attributes'][$options_id]['values'][] = $variant_values;
+                }
+            }
             $this->rows[] = $fields;
             $this->product_count++;
         }

@@ -180,6 +180,7 @@ if (!$price_list->group_is_valid($price_list->current_profile)) {
                 }
             } else {
                 $products_id = $current_row['products_id'];
+                $products_name = zen_output_string_protected($current_row['products_name']);
                 
                 // -----
                 // If the price-list is to display products' pricing (either inc or ex), get the product's 'base' price
@@ -190,8 +191,7 @@ if (!$price_list->group_is_valid($price_list->current_profile)) {
                     $products_price_inc = $price_list->display_price($products_base_price, zen_get_tax_rate($current_row['products_tax_class_id']));
                     $products_price_ex = $price_list->display_price($products_base_price);
                 }
-                // $specials_price_only=false multiplies the number of queries per product!!
-                //function zen_get_products_special_price($product_id, $specials_price_only=false)
+
                 $special_price_ex = ($price_list->config['show_special_price']) ? zen_get_products_special_price($products_id, true) : '';
                 if (!empty($special_price_ex)) {
                     $special_price_inc = $price_list->display_price($special_price_ex, zen_get_tax_rate($current_row['products_tax_class_id']));
@@ -202,15 +202,86 @@ if (!$price_list->group_is_valid($price_list->current_profile)) {
                 if (($price_list->config['show_inactive'] && $current_row['products_status'] == 0) || $current_row['categories_status'] == 0) {
 ?>
             <tr class="inactivePL">
-                <td class="prdPL"><div><?php echo $current_row['products_name']; ?></div></td>
+                <td class="prdPL">
+                    <div><?php echo $products_name; ?></div>
+                </td>
 <?php
                 } else {
 ?>
             <tr>
                 <td class="prdPL">
                     <div>
-                        <a href="<?php echo zen_href_link(zen_get_info_page($products_id), 'products_id=' . $products_id); ?>" target="_blank"><?php echo $current_row['products_name']; ?></a>
+                        <a href="<?php echo zen_href_link(zen_get_info_page($products_id), 'products_id=' . $products_id); ?>" target="_blank"><?php echo $products_name; ?></a>
                     </div>
+<?php
+                    // -----
+                    // If the current product has attributes, build up a table (one option/row) that lists the available
+                    // option-values and their associated pricing.
+                    //
+                    if (!empty($current_row['attributes'])) {
+?>
+                    <div class="pl-attr">
+                        <table class="pl-attr-table">
+<?php
+                        $is_priced_by_attributes = $current_row['products_priced_by_attribute'];
+                        foreach ($current_row['attributes'] as $option_id => $option_values) {
+?>
+                            <tr>
+                                <td><?php echo zen_output_string_protected($option_values['name']); ?></td>
+                                <td>
+<?php
+                            $separator = '';
+                            foreach ($option_values['values'] as $next_value) {
+                                // -----
+                                // Special 'name' handling for TEXT and FILE attributes ...
+                                //
+                                $price_suffix = '';
+                                if ($option_values['option_type'] === '1') {
+                                    $option_value_name = TEXT_OPTION_IS_TEXT;
+                                    if (!empty($next_value['price_per_word'])) {
+                                        $option_value_name .= TEXT_OPTION_IS_PER_WORD;
+                                        $next_value['price_prefix'] = '';
+                                        $next_value['price'] = $next_value['price_per_word'];
+                                        if ($next_value['free_words'] !== '0') {
+                                            $price_suffix = sprintf(TEXT_OPTION_FREE_WORDS, $next_value['free_words']);
+                                        }
+                                    } elseif (!empty($next_value['price_per_letter'])) {
+                                       $option_value_name .= TEXT_OPTION_IS_PER_LETTER;
+                                        $next_value['price_prefix'] = '';
+                                        $next_value['price'] = $next_value['price_per_letter'];
+                                        if ($next_value['free_letters'] !== '0') {
+                                            $price_suffix = sprintf(TEXT_OPTION_FREE_LETTERS, $next_value['free_letters']);
+                                        }
+                                    }
+                                } elseif ($option_values['option_type'] === '4') {
+                                    $option_value_name = TEXT_OPTION_IS_FILE;
+                                } else {
+                                    $option_value_name = zen_output_string_protected($next_value['name']);
+                                }
+
+                                // -----
+                                // No pricing for read-only attributes.
+                                //
+                                $option_value_price = ': ' . TEXT_INCL;
+                                if ($option_values['option_type'] === '5') {
+                                    $option_value_price = '';
+                                } elseif ($next_value['price'] != 0) {
+                                    $option_value_price = ': ' . $next_value['price_prefix'] . $price_list->display_price($next_value['price'], zen_get_tax_rate($current_row['products_tax_class_id']));
+                                }
+                                echo $separator . $option_value_name . $option_value_price . $price_suffix;
+                                $separator = ', ';
+                            }
+?>
+                                </td>
+                            </tr>
+<?php
+                        }
+?>
+                        </table>
+                    </div>
+<?php
+                    }
+?>
                 </td>
 <?php
                 }

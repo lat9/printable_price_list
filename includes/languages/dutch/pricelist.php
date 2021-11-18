@@ -1,22 +1,8 @@
 <?php
+// -----
+// Part of the "Printable Price List" plugin for Zen Cart.
+// $Id: pricelist.php, 2006 paulm
 //
-// +----------------------------------------------------------------------+
-// |zen-cart Open Source E-commerce                                       |
-// +----------------------------------------------------------------------+
-// | Copyright (c) 2003 The zen-cart developers                           |
-// |                                                                      |
-// | http://www.zen-cart.com/index.php                                    |
-// |                                                                      |
-// | Portions Copyright (c) 2003 osCommerce & Others                      |
-// +----------------------------------------------------------------------+
-// | This source file is subject to version 2.0 of the GPL license,       |
-// | that is bundled with this package in the file LICENSE, and is        |
-// | available through the world-wide-web at the following url:           |
-// | http://www.zen-cart.com/license/2_0.txt.                             |
-// | If you did not receive a copy of the zen-cart license and are unable |
-// | to obtain it through the world-wide-web, please send a note to       |
-// | license@zen-cart.com so we can mail you a copy immediately.          |
-// +----------------------------------------------------------------------+
 // $Id: pricelist.php, v1.02 2004/11/19 paulm
 //
 define('TABLE_HEADING_PRODUCTS', 'Product');
@@ -43,3 +29,13 @@ define('NAVBAR_TITLE', 'Catalogus');
 define('TABLE_HEADING_SOH', 'Voorraad'); // bmoroney
 define('TABLE_HEADING_ADDTOCART', 'Add to cart');//Added by Vartan Kat for Add to cart button
 define('PL_TEXT_GROUP_NOT_ALLOWED', 'Sorry, you\'re not allowed to view this list.');
+define('PL_PRINT_ME', 'Print this Page');
+
+define('TEXT_OPTIONS_AVAILABLE', 'Available Options:');
+define('TEXT_INCL', '-');
+define('TEXT_OPTION_IS_FILE', 'File upload');
+define('TEXT_OPTION_IS_TEXT', 'Text input');
+define('TEXT_OPTION_IS_PER_WORD', ', per word');
+define('TEXT_OPTION_FREE_WORDS', ', %u word(s) free.');   //-%u is filled in with the number of free words
+define('TEXT_OPTION_IS_PER_LETTER', ', per letter');
+define('TEXT_OPTION_FREE_LETTERS', ', %u letter(s) free.');   //-%u is filled in with the number of free letters
