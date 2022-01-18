@@ -65,7 +65,7 @@ if ($price_list->config['show_boxes']) {
 if (!$price_list->group_is_valid($price_list->current_profile)) {
     // customer is not allowed to view price_list list
     echo PL_TEXT_GROUP_NOT_ALLOWED;
-    if (zen_is_logged_in() && !zen_in_guest_checkout) {
+    if (zen_is_logged_in() && !zen_in_guest_checkout()) {
         echo '<a href="'. zen_href_link(FILENAME_LOGOFF, '', 'SSL') . '">' . HEADER_TITLE_LOGOFF . '</a>';  
     } elseif (STORE_STATUS == '0'){
         echo '&nbsp;(<a href="'. zen_href_link(FILENAME_LOGIN, '', 'SSL') . '">' . HEADER_TITLE_LOGIN . '</a>)';
