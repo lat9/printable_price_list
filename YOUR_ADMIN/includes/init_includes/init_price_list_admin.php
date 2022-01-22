@@ -4,7 +4,7 @@
 //
 // Based on the configuration settings provided in the pricelist-3.sql file provided in v1.5.0 of this plugin.
 //
-define('PL_CURRENT_VERSION', 'v3.0.1-beta1');
+define('PL_CURRENT_VERSION', 'v3.0.1');
 
 // -----
 // Wait for an admin to be logged in prior to any changes.
