@@ -20,16 +20,17 @@ if ($price_list->config['show_logo']) {
 }
 ?>
             <h3><?php echo sprintf(TEXT_PL_HEADER_TITLE, '<a href="' . zen_href_link(FILENAME_DEFAULT) . '">' . TITLE . '</a>'); ?></h3>
-            <p><?php echo sprintf(TEXT_PL_SCREEN_INTRO, $price_list->product_count); ?></p>
+            <p><?php echo sprintf(TEXT_PL_SCREEN_INTRO, $price_list->productCount); ?></p>
         </div>
 <?php
 
 if (PL_SHOW_PROFILES === 'true') {
-    $profiles_list = $price_list->get_profiles();
-    if ($profiles_list != '') {
+    $profiles_list = $price_list->getProfiles();
+    if ($profiles_list !== '') {
         echo '<div id="profilesListPL">' . $profiles_list . '</div>' . "\n";
     }
-} 
+}
+
 if ($price_list->config['show_boxes']) {
     $column_box_default = 'tpl_box_default.php';
 ?>
@@ -39,15 +40,15 @@ if ($price_list->config['show_boxes']) {
                 <td><?php $box_id = 'currenciesPL'; require DIR_WS_MODULES . 'sideboxes/' . 'currencies.php'; ?></td>
 <?php
     if ($price_list->config['included_products'] === 'all') {
-        $cat_tree = ($price_list->config['main_cats_only']) ? $price_list->get_category_list(0, '', '', '', false, true) : $price_list->get_category_list();
+        $cat_tree = ($price_list->config['main_cats_only']) ? $price_list->getCategoryList(0, '', '', '', false, true) : $price_list->getCategoryList();
 ?>
                 <td>
                     <div id="categoriesPLContent" class="sideBoxContent centeredContent">
                         <?php echo 
                             zen_draw_form('categories', zen_href_link(FILENAME_DEFAULT), 'get') . "\n" .
-                            zen_draw_pull_down_menu('plCat', $cat_tree, $price_list->current_category, 'onchange="this.form.submit();"') .
+                            zen_draw_pull_down_menu('plCat', $cat_tree, $price_list->currentCategory, 'onchange="this.form.submit();"') .
                             zen_draw_hidden_field('main_page', FILENAME_PRICELIST) .
-                            zen_draw_hidden_field('profile', $price_list->current_profile) .
+                            zen_draw_hidden_field('profile', $price_list->currentProfile) .
                             '</form>'; ?>
                     </div>
                 </td>
@@ -57,16 +58,16 @@ if ($price_list->config['show_boxes']) {
             </tr>
         </table>
 <?php
-} 
+}
 ?>
     </div>
 <?php
-if (!$price_list->group_is_valid($price_list->current_profile)) {
+if ($price_list->groupIsValid($price_list->currentProfile) === false) {
     // customer is not allowed to view price_list list
     echo PL_TEXT_GROUP_NOT_ALLOWED;
     if (zen_is_logged_in() && !zen_in_guest_checkout()) {
         echo '<a href="'. zen_href_link(FILENAME_LOGOFF, '', 'SSL') . '">' . HEADER_TITLE_LOGOFF . '</a>';  
-    } elseif (STORE_STATUS == '0'){
+    } elseif (STORE_STATUS === '0'){
         echo '&nbsp;(<a href="'. zen_href_link(FILENAME_LOGIN, '', 'SSL') . '">' . HEADER_TITLE_LOGIN . '</a>)';
     }
 } else {
@@ -77,7 +78,7 @@ if (!$price_list->group_is_valid($price_list->current_profile)) {
     <table class="colPL">
         <thead>
             <tr>
-                <td colspan="<?php echo $price_list->header_columns; ?>">
+                <td colspan="<?php echo $price_list->headerColumns; ?>">
 <?php
         if ($price_list->config['show_headers']) {
 ?>
@@ -87,8 +88,10 @@ if (!$price_list->group_is_valid($price_list->current_profile)) {
                     </div>
 <?php
         }
+
+        global $zcDate;
 ?>
-                    <div class="datePL"><?php echo strftime(DATE_FORMAT_LONG); ?></div>
+                    <div class="datePL"><?php echo $zcDate->output(DATE_FORMAT_LONG); ?></div>
                     <div id="print-me"><a href="javascript:window.print();"><?php echo PL_PRINT_ME; ?></a></div>
                     <div class="clearBoth"></div>
                 </td>
@@ -128,7 +131,7 @@ if (!$price_list->group_is_valid($price_list->current_profile)) {
                 <td class="ntsPL"><div><?php echo TABLE_HEADING_NOTES_B; ?></div></td>
 <?php
         }
-        $pl_currency_symbol = (defined('PL_INCLUDE_CURRENCY_SYMBOL') && PL_INCLUDE_CURRENCY_SYMBOL === 'false') ? '' : $price_list->currency_symbol;
+        $pl_currency_symbol = (defined('PL_INCLUDE_CURRENCY_SYMBOL') && PL_INCLUDE_CURRENCY_SYMBOL === 'false') ? '' : $price_list->currencySymbol;
         if ($price_list->config['show_price']) {
 ?>
                 <td class="prcPL"><?php echo TABLE_HEADING_PRICE_INC . $pl_currency_symbol; ?></td>
@@ -149,19 +152,7 @@ if (!$price_list->group_is_valid($price_list->current_profile)) {
 ?>
             </tr>
         </thead>
-<?php
-        if ($price_list->config['show_footers']) {
-?>
-        <tfoot>
-            <tr>
-                <td colspan="<?php echo $price_list->header_columns; ?>">
-                    <div class="footPL"><?php echo STORE_NAME_ADDRESS_PL; ?>&nbsp;&nbsp;<a href="<?php echo zen_href_link (FILENAME_DEFAULT); ?>"><?php echo TITLE; ?></a></div>
-                </td>
-            </tr>
-        </tfoot>
-<?php
-        }
-?>
+
         <tbody>
 <?php
         $found_main_cat = false;
@@ -170,7 +161,9 @@ if (!$price_list->group_is_valid($price_list->current_profile)) {
                 if ($current_row['product_count'] !== 0) {
 ?>
             <tr class="scPL-<?php echo $current_row['level'] . (($price_list->config['maincats_new_page'] && $current_row['level'] == 1 && $found_main_cat) ? ' new-page' : ''); ?>">
-                <th colspan="<?php echo $price_list->header_columns; ?>"><?php echo $current_row['categories_name']; ?></th>
+                <th colspan="<?php echo $price_list->headerColumns; ?>">
+                    <?php echo $current_row['categories_name']; ?>
+                </th>
             </tr>
 <?php
                 }
@@ -180,22 +173,22 @@ if (!$price_list->group_is_valid($price_list->current_profile)) {
             } else {
                 $products_id = $current_row['products_id'];
                 $products_name = zen_output_string_protected($current_row['products_name']);
-                
+
                 // -----
                 // If the price-list is to display products' pricing (either inc or ex), get the product's 'base' price
                 // for the display.  That'll include any attribute-based pricing, too.
                 //
                 if ($price_list->config['show_price'] || $price_list->config['show_taxfree']) {
                     $products_base_price = zen_get_products_base_price($products_id);
-                    $products_price_inc = $price_list->display_price($products_base_price, zen_get_tax_rate($current_row['products_tax_class_id']));
-                    $products_price_ex = $price_list->display_price($products_base_price);
+                    $products_price_inc = $price_list->displayPrice($products_base_price, zen_get_tax_rate($current_row['products_tax_class_id']));
+                    $products_price_ex = $price_list->displayPrice($products_base_price);
                 }
 
                 $special_price_ex = ($price_list->config['show_special_price']) ? zen_get_products_special_price($products_id, true) : '';
                 if (!empty($special_price_ex)) {
-                    $special_price_inc = $price_list->display_price($special_price_ex, zen_get_tax_rate($current_row['products_tax_class_id']));
-                    $special_price_ex = $price_list->display_price($special_price_ex);
-                    $special_date = ($price_list->config['show_special_date']) ? $price_list->get_products_special_date($products_id) : '';
+                    $special_price_inc = $price_list->displayPrice($special_price_ex, zen_get_tax_rate($current_row['products_tax_class_id']));
+                    $special_price_ex = $price_list->displayPrice($special_price_ex);
+                    $special_date = ($price_list->config['show_special_date']) ? $price_list->getProductsSpecialDate($products_id) : '';
                 }
 
                 if (($price_list->config['show_inactive'] && $current_row['products_status'] === '0') || $current_row['categories_status'] === '0') {
@@ -278,7 +271,7 @@ if (!$price_list->group_is_valid($price_list->current_profile)) {
                                 if ($option_values['option_type'] === '5') {
                                     $option_value_price = '';
                                 } elseif ($next_value['price'] != 0) {
-                                    $option_value_price = ': ' . $next_value['price_prefix'] . $price_list->display_price($next_value['price'], zen_get_tax_rate($current_row['products_tax_class_id']));
+                                    $option_value_price = ': ' . $next_value['price_prefix'] . $price_list->displayPrice($next_value['price'], zen_get_tax_rate($current_row['products_tax_class_id']));
                                 }
                                 echo $separator . $option_value_name . $option_value_price . $price_suffix;
                                 $separator = ', ';
@@ -305,7 +298,7 @@ if (!$price_list->group_is_valid($price_list->current_profile)) {
                 }
                 if ($price_list->config['show_manufacturer']) {
 ?>
-                <td class="manPL"><div><?php echo $price_list->manufacturers_names[(int)$current_row['manufacturers_id']]; ?></div></td>
+                <td class="manPL"><div><?php echo $price_list->manufacturersNames[(int)$current_row['manufacturers_id']]; ?></div></td>
 <?php
                 }
                 if ($price_list->config['show_weight']) {
@@ -313,17 +306,20 @@ if (!$price_list->group_is_valid($price_list->current_profile)) {
                 <td class="wgtPL"><div><?php echo $current_row['products_weight']; ?></div></td>
 <?php
                 }
+
                 // stock by bmoroney
                 if ($price_list->config['show_stock']) {
 ?>
                     <td class="sohPL"><div><?php echo ($current_row['products_quantity'] > 0) ? $current_row['products_quantity'] : 0; ?></div></td>
 <?php
                 }
+
                 if ($price_list->config['show_notes_a']) {
 ?>
                     <td class="ntsaPL">&nbsp;</td>
 <?php
                 }
+
                 if ($price_list->config['show_notes_b']) {
 ?>
                     <td class="ntsbPL">&nbsp;</td>
@@ -336,6 +332,7 @@ if (!$price_list->group_is_valid($price_list->current_profile)) {
                     <td class="<?php echo $price_class; ?>"><?php echo $products_price_inc; ?></td>
 <?php
                 }
+
                 if ($price_list->config['show_taxfree']) {
 ?>
                     <td class="<?php echo $price_class; ?>"><?php echo $products_price_ex; ?></td>
@@ -358,10 +355,12 @@ if (!$price_list->group_is_valid($price_list->current_profile)) {
 <?php
                         echo
                             zen_draw_form('cart_quantity', zen_href_link($products_info_page, zen_get_all_get_params(['action']) . 'action=add_product'), 'post', 'enctype="multipart/form-data" target="' . $price_list->config['add_cart_target'] . '" class="AddButtonBox"') . PHP_EOL .
-                            PRODUCTS_ORDER_QTY_TEXT . '<input type="text" name="cart_quantity" value="' . (zen_get_buy_now_qty($products_id)) . '" maxlength="6" size="4" /><br>' .
-                            zen_get_products_quantity_min_units_display($products_id) . '<br>' .
-                            zen_draw_hidden_field('products_id', $products_id) .
-                            zen_image_submit(BUTTON_IMAGE_IN_CART, BUTTON_IN_CART_ALT) .
+                                PRODUCTS_ORDER_QTY_TEXT .
+                                '<input type="text" name="cart_quantity" value="' . (zen_get_buy_now_qty($products_id)) . '" maxlength="6" size="4"><br>' .
+                                zen_get_products_quantity_min_units_display($products_id) .
+                                '<br>' .
+                                zen_draw_hidden_field('products_id', $products_id) .
+                                zen_image_submit(BUTTON_IMAGE_IN_CART, BUTTON_IN_CART_ALT) .
                             '</form>';
 ?>
                     </td>
@@ -373,7 +372,7 @@ if (!$price_list->group_is_valid($price_list->current_profile)) {
             </tr>
 <?php
                 if ($special_price_ex > 0) {
-                    $colspan = $price_list->header_columns;
+                    $colspan = $price_list->headerColumns;
                     if ($price_list->config['show_price']) {
                         $colspan--;
                     } 
@@ -398,7 +397,7 @@ if (!$price_list->group_is_valid($price_list->current_profile)) {
                 if ($price_list->config['show_description']) {
 ?>
             <tr>
-                <td class="imgDescrPL" colspan="<?php echo $price_list->header_columns; ?>">
+                <td class="imgDescrPL" colspan="<?php echo $price_list->headerColumns; ?>">
 <?php
                     if ($price_list->config['truncate_desc'] > 0 && strlen($current_row['products_description']) >= $price_list->config['truncate_desc']) {
                         echo zen_clean_html($current_row['products_description']) . '<a href="' . zen_href_link($products_info_page, 'products_id=' . $products_id) . '">' . MORE_INFO_TEXT . '</a>';
@@ -415,6 +414,24 @@ if (!$price_list->group_is_valid($price_list->current_profile)) {
 ?>
 <!-- EOF price-list main -->
         </tbody>
+<?php
+        if ($price_list->config['show_footers']) {
+?>
+        <tfoot>
+            <tr>
+                <td colspan="<?php echo $price_list->headerColumns; ?>">
+                    <div class="footPL">
+                        <?php echo STORE_NAME_ADDRESS_PL; ?>&nbsp;&nbsp;
+                        <a href="<?php echo zen_href_link(FILENAME_DEFAULT); ?>">
+                            <?php echo TITLE; ?>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        </tfoot>
+<?php
+        }
+?>
     </table>
 <?php
     }
@@ -423,14 +440,6 @@ if (!$price_list->group_is_valid($price_list->current_profile)) {
 if ($price_list->config['debug']) {
 ?>
     <div class="noPrintPL">
-<?php
-    // BEGIN Superglobals
-    if (defined ('SHOW_SUPERGLOBALS') && SHOW_SUPERGLOBALS == 'true') {
-        echo superglobals_echo();
-    }
-    // END Superglobals
-?>
-<!--eof- superglobals display -->
         <p>
 <?php
     echo 'memory_get_usage:' . memory_get_usage();
