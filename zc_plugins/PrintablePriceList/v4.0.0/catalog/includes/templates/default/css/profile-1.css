@@ -1,0 +1,27 @@
+/* screen or other media styles above this line or in the common stylesheet.css file */
+@media print {
+/* bof added for image and description  */
+.imgDescrPL div { /* cm or inch height for printing */ height: 3cm; overflow: hidden; }  
+      
+/* pricelist print styles */
+/*
+td.prdPL => settings for the products 
+td.manPL => settings for the manufacturers
+td.modPL => settings for models
+td.wgtPL => weight
+td.sohPL => stock (on hand)
+td.ntsaPL => notes a
+td.ntsbPL => notes b
+read the readme and/or look at the html source (browser::view::source) to discover other CSS classes
+*/
+
+td.prdPL div, td.manPL div, td.modPL div, td.wgtPL div { white-space: nowrap; overflow: hidden; }
+
+.footPL { position: absolute; bottom: 0; left: 0; }
+body, html  { padding: 0; margin: 0; color: black; background-color: white; }
+h1 { font-size: 12pt; }
+td, th { font-size: 7pt !important; font-family: "times new roman", serif !important; }
+.colhPL td { font-size: 7pt; }
+.pagePL, .pageOnePL { position: relative; width: 100%; border-width: 0; margin-bottom: 0; }
+/* end print styles */
+}
