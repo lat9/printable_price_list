@@ -126,6 +126,11 @@ class PrintablePriceList extends base
         $this->currencySymbol = $currencies->currencies[$_SESSION['currency']]['symbol_left'] . $currencies->currencies[$_SESSION['currency']]['symbol_right'];
     }
 
+    public function getCurrentProfile(): int
+    {
+        return $this->currentProfile;
+    }
+
     protected function initializePricelistRows()
     {
         $this->categoriesStatusClause = '';
@@ -307,7 +312,7 @@ class PrintablePriceList extends base
     {
         global $db;
 
-        $group_name = (defined('PL_GROUP_NAME_' . $profile)) ? constant('PL_GROUP_NAME_' . $profile) : '';
+        $group_name = constant('PL_GROUP_NAME_' . $profile);
         $group_is_valid = true;
         if ($group_name !== '') {
           $group_is_valid = false;

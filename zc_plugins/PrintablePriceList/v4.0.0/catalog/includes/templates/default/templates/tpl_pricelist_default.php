@@ -4,7 +4,7 @@
  * @copyright Copyright 2003-2007 Paul Mathot Haarlem, The Netherlands
  * @copyright parts Copyright 2003-2005 Zen Cart Development Team
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version v1.5.7 (or newer) 
+ * @version v1.5.8a (or newer) 
  */
 ?>
     <div class="noPrintPL">
@@ -131,7 +131,7 @@ if ($price_list->groupIsValid($price_list->currentProfile) === false) {
                 <td class="ntsPL"><div><?php echo TABLE_HEADING_NOTES_B; ?></div></td>
 <?php
         }
-        $pl_currency_symbol = (defined('PL_INCLUDE_CURRENCY_SYMBOL') && PL_INCLUDE_CURRENCY_SYMBOL === 'false') ? '' : $price_list->currencySymbol;
+        $pl_currency_symbol = (PL_INCLUDE_CURRENCY_SYMBOL === 'false') ? '' : $price_list->currencySymbol;
         if ($price_list->config['show_price']) {
 ?>
                 <td class="prcPL"><?php echo TABLE_HEADING_PRICE_INC . $pl_currency_symbol; ?></td>
