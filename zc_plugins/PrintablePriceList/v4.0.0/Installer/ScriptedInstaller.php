@@ -24,6 +24,10 @@ class ScriptedInstaller extends ScriptedInstallBase
 
             ('Show Information Sidebox Link?', 'PL_SHOW_INFO_LINK', 'true', 'Choose whether (<em>true</em>) or not (<em>false</em>) a &quot;Price List&quot; link should be shown in the Information sidebox.', $cgi, 30, NULL, 'zen_cfg_select_option([\'true\', \'false\'],', now()),
 
+            ('Information Sidebox Link Position', 'PL_INFO_LINK_POSITION', '100', 'If the &quot;Price List&quot; link is to be shown in the Information sidebox, identify the <em>numeric</em> position at which that link is inserted. Enter <code>1</code> for the first position in the list, <code>2</code> for the second and so on. To position as the last entry, enter a number larger than the number of items currently in the sidebox\'s list.<br>', $cgi, 32, NULL, NULL, now()),
+
+            ('Information Sidebox Link New Page?', 'PL_INFO_LINK_NEW_PAGE', 'true', 'If the &quot;Price List&quot; link is to be shown in the Information sidebox, indicate whether (<code>true</code>, the default) or not a click of the link should open in a new page.', $cgi, 34, NULL, 'zen_cfg_select_option([\'true\', \'false\'],', now()),
+
             ('Include currency symbol in pricelist header?', 'PL_INCLUDE_CURRENCY_SYMBOL', 'true', 'Choose whether (<em>true</em>) or not (<em>false</em>) the currently-selected currencies\' symbol should be included in the pricelist print-out.', $cgi, 40, NULL, 'zen_cfg_select_option([\'true\', \'false\'],', now())";
         $this->executeInstallerSql($sql);
 

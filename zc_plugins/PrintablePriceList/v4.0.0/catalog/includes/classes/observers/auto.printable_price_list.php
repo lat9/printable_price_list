@@ -4,24 +4,28 @@ class zcObserverPrintablePriceList extends base
     public function __construct()
     {
         global $current_page_base;
-
         if ($current_page_base !== FILENAME_PRICELIST) {
-            return;
+            $this->attach(
+                $this,
+                [
+                    'NOTIFY_INFORMATION_SIDEBOX_ADDITIONS',
+                ]
+            );
+        } else {
+            // -----
+            // Instantiate the price list for use by the template and observed notification.
+            //
+            require dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'PrintablePriceList.php';
+            global $price_list;
+            $price_list = new PrintablePriceList();
+
+            $this->attach(
+                $this,
+                [
+                    'NOTIFY_HTML_HEAD_END',
+                ]
+            );
         }
-
-        // -----
-        // Instantiate the price list for use by the template and observed notifications.
-        //
-        require dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'PrintablePriceList.php';
-        global $price_list;
-        $price_list = new PrintablePriceList();
-
-        $this->attach(
-            $this,
-            [
-                'NOTIFY_HTML_HEAD_END',
-            ]
-        );
     }
 
     protected function updateNotifyHtmlHeadEnd(&$class, $eventId)
@@ -38,5 +42,23 @@ class zcObserverPrintablePriceList extends base
         if (file_exists($ppl_profile_css)) {
             echo '<link rel="stylesheet" href="' . $ppl_profile_css . '">' . "\n";
         }
+    }
+
+    protected function updateNotifyInformationSideboxAdditions(&$class, $eventID, $not_used, &$information)
+    {
+        if (PL_SHOW_INFO_LINK === 'false' || !is_array($information)) {
+            return;
+        }
+
+        $link_target = (PL_INFO_LINK_NEW_PAGE === 'true') ? '_blank' : '_self';
+        $pricelist_page_link =
+            '<a class="list-group-item list-group-item-action" href="' . zen_href_link(FILENAME_PRICELIST) . '" target="' . $link_target . '">' .
+                BOX_HEADING_PRICELIST .
+            '</a>';
+        $link_position = ((int)PL_INFO_LINK_POSITION) - 1;
+        if ($link_position < 0) {
+            $link_position = 0;
+        }
+        array_splice($information, $link_position, 0, $pricelist_page_link);
     }
 }
