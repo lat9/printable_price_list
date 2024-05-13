@@ -37,7 +37,7 @@ table.colWrapPL td { vertical-align: top; }
 
 .datePL, #print-me { text-align: right; }
 .imgPL { float: left; margin-right: 1rem; }
-.prcPL s { display: none; }
+.prcPL s, #navBreadCrumb, .alert, .zca-banner { display: none; }
 .splPL { color: red; }
 .wgtPL { text-align: center; }
 .pagePL, .pageOnePL { color: black; background-color: white; width: 95%; margin: 0 auto; border: 1px blue solid; position: relative; }
@@ -60,7 +60,7 @@ td.prcPL , td.splPL, td.splDatePL, td.sohPL { text-align: right; }
 @media print {
   a { text-decoration: none; }
   tr.new-page { page-break-before: always;!important }
-  #print-me, .noPrintPL { display: none; }
+  #print-me, .noPrintPL, #back-to-top { display: none; }
   tbody tr { page-break-inside: avoid; }
   thead { display: table-header-group; }
   tbody { display: table-row-group; }
