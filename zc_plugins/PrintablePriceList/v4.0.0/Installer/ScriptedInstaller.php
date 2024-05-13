@@ -153,19 +153,19 @@ class ScriptedInstaller extends ScriptedInstallBase
         return $result;
     }
 
-    protected function installConfigGroup(string $config_group_title, string $config_group_description)
+    protected function installConfigGroup(string $config_group_title, string $config_group_description): int
     {
         $sql =
-            "INSERT INTO " . TABLE_CONFIGURATION_GROUP . " 
-                (configuration_group_title, configuration_group_description, sort_order, visible) 
+            "INSERT IGNORE INTO " . TABLE_CONFIGURATION_GROUP . "
+                (configuration_group_title, configuration_group_description, sort_order, visible)
              VALUES
                 ('$config_group_title', '$config_group_description', 1, 1)";
         $this->executeInstallerSql($sql);
-        $sql = "SELECT configuration_group_id FROM " . TABLE_CONFIGURATION_GROUP . " WHERE configuration_group_title='$config_group_title' LIMIT 1";
+        $sql = "SELECT configuration_group_id FROM " . TABLE_CONFIGURATION_GROUP . " WHERE configuration_group_title = '$config_group_title' LIMIT 1";
         $config_group = $this->executeInstallerSelectSql($sql);
         $cgi = $config_group->fields['configuration_group_id']; 
         $sql = "UPDATE " . TABLE_CONFIGURATION_GROUP . " SET sort_order = $cgi WHERE configuration_group_id = $cgi LIMIT 1";
         $this->executeInstallerSql($sql);
-        return $cgi;
+        return (int)$cgi;
     }
 }
