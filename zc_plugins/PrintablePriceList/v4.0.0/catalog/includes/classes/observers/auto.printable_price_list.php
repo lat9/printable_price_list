@@ -50,9 +50,15 @@ class zcObserverPrintablePriceList extends base
             return;
         }
 
+        // -----
+        // The Bootstrap template (and possibly others) provides a specific set of
+        // classes to apply to the information-sidebox links.
+        //
+        global $information_classes;
+        $link_class = (isset($information_classes)) ? ' class="' . $information_classes . '"' : '';
         $link_target = (PL_INFO_LINK_NEW_PAGE === 'true') ? '_blank' : '_self';
         $pricelist_page_link =
-            '<a class="list-group-item list-group-item-action" href="' . zen_href_link(FILENAME_PRICELIST) . '" target="' . $link_target . '">' .
+            '<a ' . $link_class . ' href="' . zen_href_link(FILENAME_PRICELIST) . '" target="' . $link_target . '">' .
                 BOX_HEADING_PRICELIST .
             '</a>';
         $link_position = ((int)PL_INFO_LINK_POSITION) - 1;
