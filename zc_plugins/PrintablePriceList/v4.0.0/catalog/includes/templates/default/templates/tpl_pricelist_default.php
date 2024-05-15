@@ -1,26 +1,21 @@
 <?php
-/** 
+/**
  *
  * @copyright Copyright 2003-2007 Paul Mathot Haarlem, The Netherlands
  * @copyright parts Copyright 2003-2005 Zen Cart Development Team
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version v1.5.8a (or newer) 
+ * @version v1.5.8a (or newer)
  */
 ?>
     <div class="noPrintPL">
-<?php
-if ($messageStack->size('header') > 0) {
-    echo $messageStack->output('header');
-}
-?>
         <div id="screenIntroPL">
 <?php
 if ($price_list->config['show_logo']) {
     echo '<a href="' . zen_href_link(FILENAME_DEFAULT) . '">' . zen_image($template->get_template_dir(HEADER_LOGO_IMAGE, DIR_WS_TEMPLATE, $current_page_base, 'images') . '/' . HEADER_LOGO_IMAGE, HEADER_ALT_TEXT) . '</a>';
 }
 ?>
-            <h3><?php echo sprintf(TEXT_PL_HEADER_TITLE, '<a href="' . zen_href_link(FILENAME_DEFAULT) . '">' . TITLE . '</a>'); ?></h3>
-            <p><?php echo sprintf(TEXT_PL_SCREEN_INTRO, $price_list->productCount); ?></p>
+            <h3><?= sprintf(TEXT_PL_HEADER_TITLE, '<a href="' . zen_href_link(FILENAME_DEFAULT) . '">' . TITLE . '</a>') ?></h3>
+            <p><?= sprintf(TEXT_PL_SCREEN_INTRO, $price_list->productCount) ?></p>
         </div>
 <?php
 
@@ -36,20 +31,30 @@ if ($price_list->config['show_boxes']) {
 ?>
         <table id="boxesPL">
             <tr>
-                <td><?php $box_id = 'languagesPL'; require DIR_WS_MODULES . 'sideboxes/' . 'languages.php'; ?></td>
-                <td><?php $box_id = 'currenciesPL'; require DIR_WS_MODULES . 'sideboxes/' . 'currencies.php'; ?></td>
+                <td>
+<?php
+    $box_id = 'languagesPL';
+    require DIR_WS_MODULES . 'sideboxes/' . 'languages.php';
+?>
+                </td>
+                <td>
+<?php
+    $box_id = 'currenciesPL';
+    require DIR_WS_MODULES . 'sideboxes/' . 'currencies.php';
+?>
+                </td>
 <?php
     if ($price_list->config['included_products'] === 'all') {
         $cat_tree = ($price_list->config['main_cats_only']) ? $price_list->getCategoryList(0, '', '', '', false, true) : $price_list->getCategoryList();
 ?>
                 <td>
                     <div id="categoriesPLContent" class="sideBoxContent centeredContent">
-                        <?php echo 
+                        <?= 
                             zen_draw_form('categories', zen_href_link(FILENAME_DEFAULT), 'get') . "\n" .
-                            zen_draw_pull_down_menu('plCat', $cat_tree, $price_list->currentCategory, 'onchange="this.form.submit();"') .
-                            zen_draw_hidden_field('main_page', FILENAME_PRICELIST) .
-                            zen_draw_hidden_field('profile', $price_list->currentProfile) .
-                            '</form>'; ?>
+                                zen_draw_pull_down_menu('plCat', $cat_tree, $price_list->currentCategory, 'onchange="this.form.submit();"') .
+                                zen_draw_hidden_field('main_page', FILENAME_PRICELIST) .
+                                zen_draw_hidden_field('profile', $price_list->currentProfile) .
+                            '</form>' ?>
                     </div>
                 </td>
 <?php
@@ -78,74 +83,74 @@ if ($price_list->groupIsValid($price_list->currentProfile) === false) {
     <table class="colPL">
         <thead>
             <tr>
-                <td colspan="<?php echo $price_list->headerColumns; ?>">
+                <td colspan="<?= $price_list->headerColumns ?>">
 <?php
         if ($price_list->config['show_headers']) {
 ?>
                     <div class="headPL">
-                        <a href="<?php echo zen_href_link(FILENAME_DEFAULT); ?>"><?php echo zen_image($template->get_template_dir(HEADER_LOGO_IMAGE, DIR_WS_TEMPLATE, $current_page_base, 'images'). '/' . HEADER_LOGO_IMAGE, HEADER_ALT_TEXT); ?></a>
-                        <h4 class="headerTitlePrintPL"><?php echo sprintf(TEXT_PL_HEADER_TITLE_PRINT , '<a href="' . zen_href_link(FILENAME_DEFAULT) . '">' . TITLE . '</a>'); ?></h4>
+                        <a href="<?= zen_href_link(FILENAME_DEFAULT) ?>"><?= zen_image($template->get_template_dir(HEADER_LOGO_IMAGE, DIR_WS_TEMPLATE, $current_page_base, 'images'). '/' . HEADER_LOGO_IMAGE, HEADER_ALT_TEXT) ?></a>
+                        <h4 class="headerTitlePrintPL"><?= sprintf(TEXT_PL_HEADER_TITLE_PRINT , '<a href="' . zen_href_link(FILENAME_DEFAULT) . '">' . TITLE . '</a>') ?></h4>
                     </div>
 <?php
         }
 
         global $zcDate;
 ?>
-                    <div class="datePL"><?php echo $zcDate->output(DATE_FORMAT_LONG); ?></div>
-                    <div id="print-me"><a href="javascript:window.print();"><?php echo PL_PRINT_ME; ?></a></div>
+                    <div class="datePL"><?= $zcDate->output(DATE_FORMAT_LONG) ?></div>
+                    <div id="print-me"><a href="javascript:window.print();"><?= PL_PRINT_ME ?></a></div>
                     <div class="clearBoth"></div>
                 </td>
             </tr>
 
             <tr class="colhPL">
-                <td class="prdPL"><?php echo TABLE_HEADING_PRODUCTS; ?></td>
+                <td class="prdPL"><?= TABLE_HEADING_PRODUCTS ?></td>
 <?php
         if ($price_list->config['show_model']) {
 ?>
-                <td class="modPL"><div><?php echo TABLE_HEADING_MODEL; ?></div></td>
+                <td class="modPL"><div><?= TABLE_HEADING_MODEL ?></div></td>
 <?php
         }
         if ($price_list->config['show_manufacturer']) {
 ?>
-                <td class="manPL"><div><?php echo TABLE_HEADING_MANUFACTURER; ?></div></td>
+                <td class="manPL"><div><?= TABLE_HEADING_MANUFACTURER ?></div></td>
 <?php
         }
         if ($price_list->config['show_weight']) {
 ?>
-                <td class="wgtPL"><div><?php echo TABLE_HEADING_WEIGHT . ' (' . TEXT_SHIPPING_WEIGHT . ')'; ?></div></td>
+                <td class="wgtPL"><div><?= TABLE_HEADING_WEIGHT . ' (' . TEXT_SHIPPING_WEIGHT . ')' ?></div></td>
 <?php
         }
 // stock by bmoroney
         if ($price_list->config['show_stock']) {
 ?>
-                <td class="sohPL"><div><?php echo TABLE_HEADING_SOH; ?></div></td>
+                <td class="sohPL"><div><?= TABLE_HEADING_SOH ?></div></td>
 <?php
         }
         if ($price_list->config['show_notes_a']) {
 ?>
-                <td class="ntsPL"><div><?php echo TABLE_HEADING_NOTES_A; ?></div></td>
+                <td class="ntsPL"><div><?= TABLE_HEADING_NOTES_A ?></div></td>
 <?php
         }
         if ($price_list->config['show_notes_b']) {
 ?>
-                <td class="ntsPL"><div><?php echo TABLE_HEADING_NOTES_B; ?></div></td>
+                <td class="ntsPL"><div><?= TABLE_HEADING_NOTES_B ?></div></td>
 <?php
         }
         $pl_currency_symbol = (PL_INCLUDE_CURRENCY_SYMBOL === 'false') ? '' : $price_list->currencySymbol;
         if ($price_list->config['show_price']) {
 ?>
-                <td class="prcPL"><?php echo TABLE_HEADING_PRICE_INC . $pl_currency_symbol; ?></td>
+                <td class="prcPL"><?= TABLE_HEADING_PRICE_INC . $pl_currency_symbol ?></td>
 <?php
         }
         if ($price_list->config['show_taxfree']) {
 ?>
-                <td class="prcPL"><?php echo TABLE_HEADING_PRICE_EX . $pl_currency_symbol; ?></td>
+                <td class="prcPL"><?= TABLE_HEADING_PRICE_EX . $pl_currency_symbol ?></td>
 <?php
         }
 //Added by Vartan Kat on july 2007 for Add to cart button
         if ($price_list->config['show_cart_button']) {
 ?>
-                <td><?php echo TABLE_HEADING_ADDTOCART; ?></td>
+                <td><?= TABLE_HEADING_ADDTOCART ?></td>
 <?php
         }
 //End of Added by Vartan Kat on july 2007 for Add to cart button
@@ -160,9 +165,9 @@ if ($price_list->groupIsValid($price_list->currentProfile) === false) {
             if (!$current_row['is_product']) {
                 if ($current_row['product_count'] !== 0) {
 ?>
-            <tr class="scPL-<?php echo $current_row['level'] . (($price_list->config['maincats_new_page'] && $current_row['level'] == 1 && $found_main_cat) ? ' new-page' : ''); ?>">
-                <th colspan="<?php echo $price_list->headerColumns; ?>">
-                    <?php echo $current_row['categories_name']; ?>
+            <tr class="scPL-<?= $current_row['level'] . (($price_list->config['maincats_new_page'] && $current_row['level'] == 1 && $found_main_cat) ? ' new-page' : '') ?>">
+                <th colspan="<?= $price_list->headerColumns ?>">
+                    <?= $current_row['categories_name'] ?>
                 </th>
             </tr>
 <?php
@@ -216,7 +221,7 @@ if ($price_list->groupIsValid($price_list->currentProfile) === false) {
                         echo zen_image(DIR_WS_IMAGES . $current_row['products_image'], $products_name, $price_list->config['image_width'], $price_list->config['image_height'], 'class="imgPL"');
                     }
 ?>
-                        <a href="<?php echo zen_href_link($products_info_page, 'products_id=' . $products_id); ?>" target="_blank"><?php echo $products_name; ?></a>
+                        <a href="<?= zen_href_link($products_info_page, 'products_id=' . $products_id) ?>" target="_blank"><?= $products_name ?></a>
                     </div>
 <?php
                     // -----
@@ -232,7 +237,7 @@ if ($price_list->groupIsValid($price_list->currentProfile) === false) {
                         foreach ($current_row['attributes'] as $option_id => $option_values) {
 ?>
                             <tr>
-                                <td><?php echo zen_output_string_protected($option_values['name']); ?></td>
+                                <td><?= zen_output_string_protected($option_values['name']) ?></td>
                                 <td>
 <?php
                             $separator = '';
@@ -293,24 +298,24 @@ if ($price_list->groupIsValid($price_list->currentProfile) === false) {
 
                 if ($price_list->config['show_model']) {
 ?>
-                <td class="modPL"><div><?php echo $current_row['products_model']; ?></div></td>
+                <td class="modPL"><div><?= $current_row['products_model'] ?></div></td>
 <?php
                 }
                 if ($price_list->config['show_manufacturer']) {
 ?>
-                <td class="manPL"><div><?php echo $price_list->manufacturersNames[(int)$current_row['manufacturers_id']] ?? ''; ?></div></td>
+                <td class="manPL"><div><?= $price_list->manufacturersNames[(int)$current_row['manufacturers_id']] ?? '' ?></div></td>
 <?php
                 }
                 if ($price_list->config['show_weight']) {
 ?>
-                <td class="wgtPL"><div><?php echo $current_row['products_weight'] ?? ''; ?></div></td>
+                <td class="wgtPL"><div><?= $current_row['products_weight'] ?? '' ?></div></td>
 <?php
                 }
 
                 // stock by bmoroney
                 if ($price_list->config['show_stock']) {
 ?>
-                    <td class="sohPL"><div><?php echo ($current_row['products_quantity'] > 0) ? $current_row['products_quantity'] : 0; ?></div></td>
+                    <td class="sohPL"><div><?= ($current_row['products_quantity'] > 0) ? $current_row['products_quantity'] : 0 ?></div></td>
 <?php
                 }
 
@@ -329,13 +334,13 @@ if ($price_list->groupIsValid($price_list->currentProfile) === false) {
                 $price_class = ($special_price_ex > 0) ? 'prcPL notSplPL' : 'prcPL';
                 if ($price_list->config['show_price']) {
 ?>        
-                    <td class="<?php echo $price_class; ?>"><?php echo $products_price_inc; ?></td>
+                    <td class="<?= $price_class ?>"><?= $products_price_inc ?></td>
 <?php
                 }
 
                 if ($price_list->config['show_taxfree']) {
 ?>
-                    <td class="<?php echo $price_class; ?>"><?php echo $products_price_ex; ?></td>
+                    <td class="<?= $price_class ?>"><?= $products_price_ex ?></td>
 <?php
                 }
 
@@ -344,8 +349,8 @@ if ($price_list->groupIsValid($price_list->currentProfile) === false) {
                     if (zen_has_product_attributes ($products_id) ) {
 ?>
                     <td>
-                        <a href="<?php echo zen_href_link($products_info_page, 'products_id=' . $products_id); ?>" target="<?php echo $price_list->config['add_cart_target']; ?>">
-                            <?php echo MORE_INFO_TEXT; ?>
+                        <a href="<?= zen_href_link($products_info_page, 'products_id=' . $products_id) ?>" target="<?= $price_list->config['add_cart_target'] ?>">
+                            <?= MORE_INFO_TEXT ?>
                         </a>
                     </td>
 <?php
@@ -381,7 +386,7 @@ if ($price_list->groupIsValid($price_list->currentProfile) === false) {
                     }
 ?>
             <tr>
-                <td class="splDatePL" colspan="<?php echo $colspan; ?>"><?php echo (!empty($special_date)) ? (TEXT_PL_AVAIL_TILL . $special_date) : TEXT_PL_SPECIAL; ?></td>
+                <td class="splDatePL" colspan="<?= $colspan ?>"><?= (!empty($special_date)) ? (TEXT_PL_AVAIL_TILL . $special_date) : TEXT_PL_SPECIAL ?></td>
 <?php
                     if ($price_list->config['show_price']) {
                         echo '<td class="splPL">' . $special_price_inc . '</td>' . "\n";
@@ -397,7 +402,7 @@ if ($price_list->groupIsValid($price_list->currentProfile) === false) {
                 if ($price_list->config['show_description']) {
 ?>
             <tr>
-                <td class="imgDescrPL" colspan="<?php echo $price_list->headerColumns; ?>">
+                <td class="imgDescrPL" colspan="<?= $price_list->headerColumns ?>">
 <?php
                     if ($price_list->config['truncate_desc'] > 0 && strlen($current_row['products_description']) >= $price_list->config['truncate_desc']) {
                         echo zen_clean_html($current_row['products_description']) . '<a href="' . zen_href_link($products_info_page, 'products_id=' . $products_id) . '">' . MORE_INFO_TEXT . '</a>';
@@ -419,11 +424,11 @@ if ($price_list->groupIsValid($price_list->currentProfile) === false) {
 ?>
         <tfoot>
             <tr>
-                <td colspan="<?php echo $price_list->headerColumns; ?>">
+                <td colspan="<?= $price_list->headerColumns ?>">
                     <div class="footPL">
-                        <?php echo STORE_NAME_ADDRESS_PL; ?>&nbsp;&nbsp;
-                        <a href="<?php echo zen_href_link(FILENAME_DEFAULT); ?>">
-                            <?php echo TITLE; ?>
+                        <?= STORE_NAME_ADDRESS_PL ?>&nbsp;&nbsp;
+                        <a href="<?= zen_href_link(FILENAME_DEFAULT) ?>">
+                            <?= TITLE ?>
                         </a>
                     </div>
                 </td>
