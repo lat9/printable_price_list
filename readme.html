@@ -5,19 +5,46 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Printable Price List</title>
 <style>
-a, a:active, a:visited { color: #006666; }
-a:hover { color:#00CC99; text-decoration: underline; }
-body, p, h1, h2, h3, h4, h5, h6, li, td, dd, dt { font-family: Verdana, AvantGarde, Tahoma, Arial, sans-serif; font-size: 10pt; color: black; padding: 0px; margin: 20px; }
-p { margin: 5px 20px; }
-h1, h2, h3, h4 { font-weight: bold }
-h1 { font-size: 20px; }
-h2 { font-size: 16px; }
-ol li, ul li { margin: 5px 0; }
-.corefile, .impt { color: red; }
-img { margin-left: 20px; max-width: 95%; }
-.small_img { float: left; margin-right: 25px; }
-.clearBoth { clear: both; }
-.smaller { font-size: smaller; }
+a, a:active, a:visited {
+    color: #006666;
+}
+a:hover {
+    color:#00CC99; text-decoration: underline;
+}
+body, p, h1, h2, h3, h4, h5, h6, li, td, dd, dt {
+    font-family: Verdana, AvantGarde, Tahoma, Arial, sans-serif;
+    font-size: 10pt;
+    color: black;
+    padding: 0px;
+    margin: 20px;
+}
+p {
+    margin: 5px 20px;
+}
+h1, h2, h3, h4 {
+    font-weight: bold
+}
+h1 {
+    font-size: 20px;
+}
+h2 {
+    font-size: 16px;
+}
+ol li, ul li {
+    margin: 5px 0;
+}
+.corefile, .impt {
+    color: red;
+}
+.smaller {
+    font-size: smaller;
+}
+.big-note {
+    font-variant: small-caps;
+    color: red;
+    font-size: large;
+    font-weight: bold;
+}
 </style>
 </head>
 
@@ -34,6 +61,7 @@ img { margin-left: 20px; max-width: 95%; }
         <li>Development: Carine Bruyndoncx (osC) &amp; Paul Mathot (paulm) (osC&amp;zen)</li>
         <li>Hubert and Vartan Kat for the "add to cart" buttons code</li>
     </ul>
+    <p>It also picks up the zc158 changes provided by @OldNGrey's <a href="https://github.com/OldNGreyBMR/printable_price_list" target="_blank">GitHub repository</a>.</p>
     <h3>Known Limitations</h3>
     <p>The following features, requested within the plugin's support thread, are not currently supported:</p>
     <ul>
@@ -43,7 +71,15 @@ img { margin-left: 20px; max-width: 95%; }
     <hr>
     <h2>What it does</h2>
     <p>This <a href="https://docs.zen-cart.com/dev/plugins/encapsulated_plugins/" target="_blank">encapsulated</a> plugin provides, as its name implies, a printable price-list that your customers can view and/or print.  Once the plugin's files are <a href="#install">installed</a>, you can configure your store's price list display using the new configuration screens created by the plugin's installation.</p>
+    <p>The plugin has been validated with:<ol>
+        <li>Zen Cart 1.5.8a</li>
+        <li>Zen Cart 2.0.0</li>
+        <li>Zen Cart 2.0.1</li>
+        <li><a href="https://www.zen-cart.com/downloads.php?do=file&id=2191" target="_blank">ZCA Bootstrap Template</a>, v3.7.0</li>
+    </ol></p>
     <p>Refer to the plugin's online <a href="https://github.com/lat9/printable_price_list/wiki" target="_blank">wiki</a> articles for additional information.</p>
+    <p><span class="big-note">Note:</span> If you are upgrading from a version <em>prior to</em> v4.0.0, you'll need to remove the files associated with that previous version of the plugin.  See <a href="https://github.com/lat9/printable_price_list/wiki/Upgrading-to-v4.0.0---From-a-Version-Prior-to-v4.0.0" target="_blank">this</a> GitHub wiki article for details.</p>
+    <p><span class="big-note">Note:</span> If you are using Zen Cart 1.5.8a or 2.0.0 (or a version of the <em>ZCA Bootstrap Template</em> prior to v3.7.0, you'll need add the plugin's required notification to enable its page-link addition to the <em>Information</em> sidebox.  See <a href="https://github.com/lat9/printable_price_list/wiki/Notification-Required-for-%22Information%22-Sidebox-Link" target="_blank">this</a> GitHub wiki article for details.</p>
 
     <hr>
     <h2 id="install">Installation</h2>
@@ -61,7 +97,9 @@ img { margin-left: 20px; max-width: 95%; }
     <h2>Version History</h2>
     <ul>
         <li>v4.0.0, 2024-05-14 (lat9):<ol>
-            <li>CHANGE: The plugin has been convered to an encapsulated plugin, making its installation and removal much easier.</li>
+            <li>CHANGE: The plugin has been converted to an encapsulated plugin, making its installation and removal much easier.</li>
+            <li>BUGFIX: Pre-declare all class variables for PHP 8.2 deprecation.</li>
+            <li>BUGFIX: Correct PHP Warnings for conditionally-available price-list product features.</li>
         </ol></li>
         <li>v3.0.1, 2022-01-22 (lat9/swguy):<ol>
             <li>BUGFIX: Correct missing parentheses on function call.</li>

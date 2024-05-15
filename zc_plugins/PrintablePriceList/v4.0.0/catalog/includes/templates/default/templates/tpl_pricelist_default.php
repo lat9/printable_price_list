@@ -298,12 +298,12 @@ if ($price_list->groupIsValid($price_list->currentProfile) === false) {
                 }
                 if ($price_list->config['show_manufacturer']) {
 ?>
-                <td class="manPL"><div><?php echo $price_list->manufacturersNames[(int)$current_row['manufacturers_id']]; ?></div></td>
+                <td class="manPL"><div><?php echo $price_list->manufacturersNames[(int)$current_row['manufacturers_id']] ?? ''; ?></div></td>
 <?php
                 }
                 if ($price_list->config['show_weight']) {
 ?>
-                <td class="wgtPL"><div><?php echo $current_row['products_weight']; ?></div></td>
+                <td class="wgtPL"><div><?php echo $current_row['products_weight'] ?? ''; ?></div></td>
 <?php
                 }
 
@@ -446,7 +446,7 @@ if ($price_list->config['debug']) {
     if (function_exists ('memory_get_peak_usage')) {
         echo ',&nbsp;memory_get_peak_usage: ' . memory_get_peak_usage();
     }
-    echo ',&nbsp;queries: ' . $db->count_queries;
+    echo ',&nbsp;queries: ' . $db->queryCount();
     echo ',&nbsp;query time: ' . $db->total_query_time;
 ?>
         </p>
