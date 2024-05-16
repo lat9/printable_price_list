@@ -80,10 +80,10 @@ if ($price_list->groupIsValid($price_list->currentProfile) === false) {
         echo '<h3 id="noMatchPL">' . TEXT_PL_NOTHING_FOUND . '</h3>';
     } else {
 ?>
-    <table class="colPL">
+    <table class="tablePL">
         <thead>
             <tr>
-                <td colspan="<?= $price_list->headerColumns ?>">
+                <th colspan="<?= $price_list->headerColumns ?>">
 <?php
         if ($price_list->config['show_headers']) {
 ?>
@@ -99,58 +99,58 @@ if ($price_list->groupIsValid($price_list->currentProfile) === false) {
                     <div class="datePL"><?= $zcDate->output(DATE_FORMAT_LONG) ?></div>
                     <div id="print-me"><a href="javascript:window.print();"><?= PL_PRINT_ME ?></a></div>
                     <div class="clearBoth"></div>
-                </td>
+                </th>
             </tr>
 
-            <tr class="colhPL">
-                <td class="prdPL"><?= TABLE_HEADING_PRODUCTS ?></td>
+            <tr class="theadPL">
+                <th class="prdPL"><?= TABLE_HEADING_PRODUCTS ?></th>
 <?php
         if ($price_list->config['show_model']) {
 ?>
-                <td class="modPL"><div><?= TABLE_HEADING_MODEL ?></div></td>
+                <th class="modPL"><?= TABLE_HEADING_MODEL ?></th>
 <?php
         }
         if ($price_list->config['show_manufacturer']) {
 ?>
-                <td class="manPL"><div><?= TABLE_HEADING_MANUFACTURER ?></div></td>
+                <th class="manPL"><?= TABLE_HEADING_MANUFACTURER ?></th>
 <?php
         }
         if ($price_list->config['show_weight']) {
 ?>
-                <td class="wgtPL"><div><?= TABLE_HEADING_WEIGHT . ' (' . TEXT_SHIPPING_WEIGHT . ')' ?></div></td>
+                <th class="wgtPL"><?= TABLE_HEADING_WEIGHT . ' (' . TEXT_SHIPPING_WEIGHT . ')' ?></th>
 <?php
         }
 // stock by bmoroney
         if ($price_list->config['show_stock']) {
 ?>
-                <td class="sohPL"><div><?= TABLE_HEADING_SOH ?></div></td>
+                <th class="sohPL"><?= TABLE_HEADING_SOH ?></th>
 <?php
         }
         if ($price_list->config['show_notes_a']) {
 ?>
-                <td class="ntsPL"><div><?= TABLE_HEADING_NOTES_A ?></div></td>
+                <th class="ntsPL"><div><?= TABLE_HEADING_NOTES_A ?></div></th>
 <?php
         }
         if ($price_list->config['show_notes_b']) {
 ?>
-                <td class="ntsPL"><div><?= TABLE_HEADING_NOTES_B ?></div></td>
+                <th class="ntsPL"><?= TABLE_HEADING_NOTES_B ?></th>
 <?php
         }
         $pl_currency_symbol = (PL_INCLUDE_CURRENCY_SYMBOL === 'false') ? '' : $price_list->currencySymbol;
         if ($price_list->config['show_price']) {
 ?>
-                <td class="prcPL"><?= TABLE_HEADING_PRICE_INC . $pl_currency_symbol ?></td>
+                <th class="prcPL"><?= TABLE_HEADING_PRICE_INC . $pl_currency_symbol ?></th>
 <?php
         }
         if ($price_list->config['show_taxfree']) {
 ?>
-                <td class="prcPL"><?= TABLE_HEADING_PRICE_EX . $pl_currency_symbol ?></td>
+                <th class="prcPL"><?= TABLE_HEADING_PRICE_EX . $pl_currency_symbol ?></th>
 <?php
         }
 //Added by Vartan Kat on july 2007 for Add to cart button
         if ($price_list->config['show_cart_button']) {
 ?>
-                <td><?= TABLE_HEADING_ADDTOCART ?></td>
+                <th><?= TABLE_HEADING_ADDTOCART ?></th>
 <?php
         }
 //End of Added by Vartan Kat on july 2007 for Add to cart button
@@ -200,14 +200,12 @@ if ($price_list->groupIsValid($price_list->currentProfile) === false) {
 ?>
             <tr class="inactivePL">
                 <td class="prdPL">
-                    <div>
 <?php
                     if ($price_list->config['show_image']){
                         echo zen_image(DIR_WS_IMAGES . $current_row['products_image'], $products_name, $price_list->config['image_width'], $price_list->config['image_height'], 'class="imgPL"');
                     }
                     echo $products_name;
 ?>
-                    </div>
                 </td>
 <?php
                 } else {
@@ -215,14 +213,12 @@ if ($price_list->groupIsValid($price_list->currentProfile) === false) {
 ?>
             <tr>
                 <td class="prdPL">
-                    <div>
 <?php
                     if ($price_list->config['show_image']){
                         echo zen_image(DIR_WS_IMAGES . $current_row['products_image'], $products_name, $price_list->config['image_width'], $price_list->config['image_height'], 'class="imgPL"');
                     }
 ?>
-                        <a href="<?= zen_href_link($products_info_page, 'products_id=' . $products_id) ?>" target="_blank"><?= $products_name ?></a>
-                    </div>
+                    <a href="<?= zen_href_link($products_info_page, 'products_id=' . $products_id) ?>" target="_blank"><?= $products_name ?></a>
 <?php
                     // -----
                     // If the current product has attributes, build up a table (one option/row) that lists the available
@@ -298,24 +294,24 @@ if ($price_list->groupIsValid($price_list->currentProfile) === false) {
 
                 if ($price_list->config['show_model']) {
 ?>
-                <td class="modPL"><div><?= $current_row['products_model'] ?></div></td>
+                <td class="modPL"><?= $current_row['products_model'] ?></td>
 <?php
                 }
                 if ($price_list->config['show_manufacturer']) {
 ?>
-                <td class="manPL"><div><?= $price_list->manufacturersNames[(int)$current_row['manufacturers_id']] ?? '' ?></div></td>
+                <td class="manPL"><?= $price_list->manufacturersNames[(int)$current_row['manufacturers_id']] ?? '' ?></td>
 <?php
                 }
                 if ($price_list->config['show_weight']) {
 ?>
-                <td class="wgtPL"><div><?= $current_row['products_weight'] ?? '' ?></div></td>
+                <td class="wgtPL"><?= $current_row['products_weight'] ?? '' ?></td>
 <?php
                 }
 
                 // stock by bmoroney
                 if ($price_list->config['show_stock']) {
 ?>
-                    <td class="sohPL"><div><?= ($current_row['products_quantity'] > 0) ? $current_row['products_quantity'] : 0 ?></div></td>
+                    <td class="sohPL"><?= ($current_row['products_quantity'] > 0) ? $current_row['products_quantity'] : 0 ?></td>
 <?php
                 }
 
