@@ -1,4 +1,10 @@
 <?php
+// -----
+// Part of the "Printable Price List" plugin by lat9.
+// Copyright (C) 2024, https://vinosdefrutastropicales.com
+//
+// Last updated: v4.0.0
+//
 class zcObserverPrintablePriceList extends base
 {
     public function __construct()

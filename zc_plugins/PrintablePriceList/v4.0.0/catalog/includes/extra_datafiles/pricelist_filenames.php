@@ -1,23 +1,15 @@
 <?php
+/**
+ * @copyright Copyright 2003-2007 Paul Mathot Haarlem, The Netherlands & Carine Bruyndoncx, Belgium
+ * @copyright parts Copyright 2003-2005 Zen Cart Development Team
+ * @license https://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
+ * $Id: pricelist_filenames.php, v1.0 2004/06/14 paulm
+ */
+// -----
+// Part of the Printable Price List plugin for Zen Cart v1.5.8a and later.
+// Copyright (C) 2014-2024, Vinos de Frutas Tropicales (lat9)
 //
-// +----------------------------------------------------------------------+
-// |zen-cart Open Source E-commerce                                       |
-// +----------------------------------------------------------------------+
-// | Copyright (c) 2003 The zen-cart developers                           |
-// |                                                                      |
-// | http://www.zen-cart.com/index.php                                    |
-// |                                                                      |
-// | Portions Copyright (c) 2003 osCommerce & Others                      |
-// +----------------------------------------------------------------------+
-// | This source file is subject to version 2.0 of the GPL license,       |
-// | that is bundled with this package in the file LICENSE, and is        |
-// | available through the world-wide-web at the following url:           |
-// | http://www.zen-cart.com/license/2_0.txt.                             |
-// | If you did not receive a copy of the zen-cart license and are unable |
-// | to obtain it through the world-wide-web, please send a note to       |
-// | license@zen-cart.com so we can mail you a copy immediately.          |
-// +----------------------------------------------------------------------+
-// $Id: pricelist_filenames.php, v1.0 2004/06/14 paulm
+// Last updated: v4.0.0
 //
 
 // define the new filenames used in the project

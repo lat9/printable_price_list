@@ -2,6 +2,8 @@
 // -----
 // Part of the Printable Pricelist plugin for Zen Cart.
 //
+// Last updated: v4.0.0
+//
 $define = [
     'BOX_CONFIGURATION_PL' => 'Printable Price-list',
     'BOX_CONFIGURATION_PL_1' => 'Price-list Profile-1',
