@@ -6,7 +6,7 @@
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
  * @version v1.5.8a (or newer)
  *
- * Last updated: v4.0.0
+ * Last updated: v4.0.1
  */
 ?>
     <div class="noPrintPL">
@@ -164,8 +164,11 @@ if ($price_list->groupIsValid($price_list->currentProfile) === false) {
 <?php
         $found_main_cat = false;
         foreach ($price_list->rows as $current_row) {
-            if (!$current_row['is_product']) {
+            if (($current_row['is_product'] ?? false) === false) {
                 if ($current_row['product_count'] !== 0) {
+                    if (!isset($current_row['level'])) {
+                        $current_row['level'] = 0;
+                    } else {
 ?>
             <tr class="scPL-<?= $current_row['level'] . (($price_list->config['maincats_new_page'] && $current_row['level'] == 1 && $found_main_cat) ? ' new-page' : '') ?>">
                 <th colspan="<?= $price_list->headerColumns ?>">
@@ -173,6 +176,7 @@ if ($price_list->groupIsValid($price_list->currentProfile) === false) {
                 </th>
             </tr>
 <?php
+                    }
                 }
                 if ($current_row['level'] == 1) {
                     $found_main_cat = true;
