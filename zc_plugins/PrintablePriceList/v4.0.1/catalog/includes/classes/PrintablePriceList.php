@@ -8,7 +8,7 @@
 // Part of the Printable Price List plugin for Zen Cart v1.5.8a and later.
 // Copyright (C) 2014-2024, Vinos de Frutas Tropicales (lat9)
 //
-// Last updated: v4.0.0
+// Last updated: v4.0.1
 //
 // Define the class that provides the price-list support functions.
 //
@@ -36,7 +36,12 @@ class PrintablePriceList extends base
         global $db, $currencies;
 
         $this->currentProfile = (int)($_GET['profile'] ?? PL_DEFAULT_PROFILE);
-        $this->enabled = (constant('PL_ENABLE_' . $this->currentProfile) === 'true');
+        $profile_enable = 'PL_ENABLE_' . $this->currentProfile;
+        if (!defined($profile_enable)) {
+            $this->currentProfile = (int)PL_DEFAULT_PROFILE;
+            $profile_enable = 'PL_ENABLE_' . $this->currentProfile;
+        }
+        $this->enabled = (constant($profile_enable) === 'true');
 
         // -----
         // This array, one element per profile-specific configuration setting, contains three required and one optional element:

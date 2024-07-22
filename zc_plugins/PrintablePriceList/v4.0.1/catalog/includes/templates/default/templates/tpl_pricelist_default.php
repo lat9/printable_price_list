@@ -165,20 +165,16 @@ if ($price_list->groupIsValid($price_list->currentProfile) === false) {
         $found_main_cat = false;
         foreach ($price_list->rows as $current_row) {
             if (($current_row['is_product'] ?? false) === false) {
-                if ($current_row['product_count'] !== 0) {
-                    if (!isset($current_row['level'])) {
-                        $current_row['level'] = 0;
-                    } else {
+                if ($current_row['product_count'] !== 0 && isset($current_row['level'])) {
 ?>
-            <tr class="scPL-<?= $current_row['level'] . (($price_list->config['maincats_new_page'] && $current_row['level'] == 1 && $found_main_cat) ? ' new-page' : '') ?>">
+            <tr class="scPL-<?= $current_row['level'] . (($price_list->config['maincats_new_page'] && $current_row['level'] === 1 && $found_main_cat) ? ' new-page' : '') ?>">
                 <th colspan="<?= $price_list->headerColumns ?>">
                     <?= $current_row['categories_name'] ?>
                 </th>
             </tr>
 <?php
-                    }
                 }
-                if ($current_row['level'] == 1) {
+                if (($current_row['level'] ?? 0) === 1) {
                     $found_main_cat = true;
                 }
             } else {
