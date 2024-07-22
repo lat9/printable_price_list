@@ -1,6 +1,6 @@
 <?php
 return [
-    'pluginVersion' => 'v4.0.0',
+    'pluginVersion' => 'v4.0.1',
     'pluginName' => 'Printable Price List',
     'pluginDescription' => 'This drop-in plugin provides a printable price-list for your Zen Cart store. Up to 3 separate variations can be customized; see the plugin\'s readme.html file for additional information.',
     'pluginAuthor' => 'Vinos de Frutas Tropicales (lat9)',
