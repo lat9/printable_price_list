@@ -1,6 +1,6 @@
-# Printable Pricelist for Zen Carts v1.5.7 and Later
+# Printable Pricelist for Zen Carts v1.5.8a and Later
 
-This drop-in plugin provides a printable price-list for your Zen Cart store.  Up to 3 separate variations can be customized; see the plugin's readme.html file for additional information.
+This [encapsulated](https://docs.zen-cart.com/dev/plugins/encapsulated_plugins/) plugin provides a printable price-list for your Zen Cart store.  Up to 3 separate variations can be customized; see the plugin's readme.html file and its [wiki](https://github.com/lat9/printable_price_list/wiki) articles for additional information.
 
 **Zen Cart Download:**  https://www.zen-cart.com/downloads.php?do=file&id=173
 

@@ -2,151 +2,145 @@
 <html>
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Printable Price List</title>
-<style">
-<!--
-a, a:active, a:visited { color: #006666; text-decoration: none; }
-a:hover { color:#00CC99; text-decoration: underline; }
-body, p, h1, h2, h3, h4, h5, h6, li, td, dd, dt { font-family: Verdana, AvantGarde, Tahoma, Arial, sans-serif; font-size: 10pt; color: black; padding: 0px; margin: 20px; }
-p { margin: 5px 20px; }
-pre { margin: 20px; }
-H1, H2, H3, H4 { font-weight: bold }
-h1 { font-size: 20px; }
-h2 { font-size: 16px; }
-ol li, ul li { margin: 5px 0; }
-.corefile, .impt { color: red; }
-img { margin-left: 20px; max-width: 95%; }
-.small_img { float: left; margin-right: 25px; }
-.clearBoth { clear: both; }
-#permissions { margin-top: 1em; }
-.smaller { font-size: smaller; }
--->
+<style>
+a, a:active, a:visited {
+    color: #006666;
+}
+a:hover {
+    color:#00CC99; text-decoration: underline;
+}
+body, p, h1, h2, h3, h4, h5, h6, li, td, dd, dt {
+    font-family: Verdana, AvantGarde, Tahoma, Arial, sans-serif;
+    font-size: 10pt;
+    color: black;
+    padding: 0px;
+    margin: 20px;
+}
+p {
+    margin: 5px 20px;
+}
+h1, h2, h3, h4 {
+    font-weight: bold
+}
+h1 {
+    font-size: 20px;
+}
+h2 {
+    font-size: 16px;
+}
+ol li, ul li {
+    margin: 5px 0;
+}
+.corefile, .impt {
+    color: red;
+}
+.smaller {
+    font-size: smaller;
+}
+.big-note {
+    font-variant: small-caps;
+    color: red;
+    font-size: large;
+    font-weight: bold;
+}
 </style>
 </head>
 
 <body>
-<h1>Printable Price List &mdash;  for Zen Cart v1.5.7 and later</h1>
-<h3>Version 3.0.1.  <span class="smaller">Copyright &copy; 2014-2022, Vinos de Frutas Tropicales</span></h3>
-<p>Current Support Thread at Zen Cart Forums: <a href="https://www.zen-cart.com/showthread.php?49126-Printable-Price-list-support-thread" target="_blank">https://www.zen-cart.com/showthread.php?49126-Printable-Price-list-support-thread</a></p>
-<div id="permissions">
-  <p><strong>Note:</strong> This plugin's file-set includes a new folder: <code>/includes/templates/template_default/pricelist</code>. If your store creates debug-log files similar to the following upon an access to <code>http://www.example.com/index.php?main_page=pricelist</code>, you'll need to check the permissions assigned to this new folder and its associated files: 755 and 644, respectively.</p>
-  <p><br><code>PHP Warning: require(includes/templates/template_default/templates/tpl_pricelist_default.php): failed to open stream: No such file or directory in {filesystem}/includes/templates/template_default/common/tpl_main_page.php on line xxx</code></p>
-</div>
+    <h1>Printable Price List &mdash;  for Zen Cart v1.5.8a and later</h1>
+    <h3>Version 4.0.1. <span class="smaller">Copyright &copy; 2014-2024, Vinos de Frutas Tropicales</span></h3>
+    <p>Support Thread at Zen Cart Forums: <a href="https://www.zen-cart.com/showthread.php?49126-Printable-Price-list-support-thread" target="_blank">https://www.zen-cart.com/showthread.php?49126-Printable-Price-list-support-thread</a></p>
+    <p>Zen Cart Plugin Download Link: <a href="https://www.zen-cart.com/downloads.php?do=file&id=173" target="_blank">https://www.zen-cart.com/downloads.php?do=file&id=173</a></p>
 
-<h3>Credits</h3>
-<p>This version of the plugin is based on v1.5.0 of the like-named plugin for the Zen Cart v1.3.x series, created by:
-<ul>
-  <li>Rinalds Uzkalns (a small part of the code is still based on his osc list)</li>
-  <li>Development: Carine Bruyndoncx (osC) &amp; Paul Mathot (paulm) (osC&amp;zen)</li>
-  <li>Hubert and Vartan Kat for the "add to cart" buttons code</li>
-</ul>
-<h3>Known Limitations</h3>
-<p>The following features, requested within the plugin's support thread, are not currently supported:</p>
-<ul>
-  <li>Integration with the &quot;Dual Pricing&quot; plugin.</li>
-</ul>
+    <h3>Credits</h3>
+    <p>This plugin is based on v1.5.0 of the like-named plugin for the Zen Cart v1.3.x series, created by:
+    <ul>
+        <li>Rinalds Uzkalns (a small part of the code is still based on his osc list)</li>
+        <li>Development: Carine Bruyndoncx (osC) &amp; Paul Mathot (paulm) (osC&amp;zen)</li>
+        <li>Hubert and Vartan Kat for the "add to cart" buttons code</li>
+    </ul>
+    <p>It also picks up the zc158 changes provided by @OldNGrey's <a href="https://github.com/OldNGreyBMR/printable_price_list" target="_blank">GitHub repository</a>.</p>
+    <h3>Known Limitations</h3>
+    <p>The following features, requested within the plugin's support thread, are not currently supported:</p>
+    <ul>
+        <li>Integration with the &quot;Dual Pricing&quot; plugin (zc158a) and &quot;Wholesale Pricing&quot; feature (zc200+). Only retail pricing is provided by the plugin.</li>
+    </ul>
 
-<hr />
-<h2>What it does</h2>
-<p>This plugin provides, as its name implies, a printable price-list that your customers can view and/or print.  Once the plugin's files are <a href="#install">installed</a>, you can configure your store's price list display using the new configuration screens created by the install.</p>
+    <hr>
+    <h2>What it does</h2>
+    <p>This <a href="https://docs.zen-cart.com/dev/plugins/encapsulated_plugins/" target="_blank">encapsulated</a> plugin provides, as its name implies, a printable price-list that your customers can view and/or print.  Once the plugin's files are <a href="#install">installed</a>, you can configure your store's price list display using the new configuration screens created by the plugin's installation.</p>
+    <p>The plugin has been validated with:<ol>
+        <li>Zen Cart 1.5.8a</li>
+        <li>Zen Cart 2.0.0</li>
+        <li>Zen Cart 2.0.1</li>
+        <li><a href="https://www.zen-cart.com/downloads.php?do=file&id=2191" target="_blank">ZCA Bootstrap Template</a>, v3.7.0</li>
+    </ol></p>
+    <p>Refer to the plugin's online <a href="https://github.com/lat9/printable_price_list/wiki" target="_blank">wiki</a> articles for additional information.</p>
+    <p><span class="big-note">Note:</span> If you are upgrading from a version <em>prior to</em> v4.0.0, you'll need to remove the files associated with that previous version of the plugin.  See <a href="https://github.com/lat9/printable_price_list/wiki/Upgrading-to-v4.0.0---From-a-Version-Prior-to-v4.0.0" target="_blank">this</a> GitHub wiki article for details.</p>
+    <p><span class="big-note">Note:</span> If you are using Zen Cart 1.5.8a or 2.0.0 (or a version of the <em>ZCA Bootstrap Template</em> prior to v3.7.0, you'll need add the plugin's required notification to enable its page-link addition to the <em>Information</em> sidebox.  See <a href="https://github.com/lat9/printable_price_list/wiki/Notification-Required-for-%22Information%22-Sidebox-Link" target="_blank">this</a> GitHub wiki article for details.</p>
 
-<h2>Configuration</h2>
-<h3>Admin-Level Configurations</h3>
-<p>Once the plugin is <a href="#install">installed</a>, there are four (4) new configuration groups available in your admin's <em>Configuration</em> dropdown menu:</p>
-<ol>
-  <li><b>Printable Price-list</b> &mdash; this group contains common settings for all price-list profiles.</li>
-  <li><b>Price-list Profile-1</b> &mdash; this group contains configuration settings for profile#1.</li>
-  <li><b>Price-list Profile-2</b> &mdash; this group contains configuration settings for profile#2.</li>
-  <li><b>Price-list Profile-3</b> &mdash; this group contains configuration settings for profile#3.</li>
-</ol>
-<p>The common settings display as:</p>
-<img src="ppl_main_config.jpg" alt="Printable Price-list Settings" title="Printable Price-list Settings" />
-<p>The profile-based settings allow you to configure up to three (3) different views of the price-list and/or limit a specific price-list view to a customer group (using the <em>Customers-&gt;Group Pricing</em> settings).  Each of the profile-specific settings display in their own page:</p>
-<img src="ppl_profile_config.jpg" alt="Price-list Profile-n Settings" title="Price-list Profile-n Settings" />
+    <hr>
+    <h2 id="install">Installation</h2>
+    <p>The plugin's installation, since it's an <a href="https://docs.zen-cart.com/dev/plugins/encapsulated_plugins/" target="_blank">encapsulated</a> plugin, is <em>very</em> easy.</p>
+    <ol>
+        <li>Unzip the plugin's package file, which you've most likely already done if you're reading this!</li>
+        <li>Copy the <code>/zc_plugins</code> sub-directory and all its contents to the root directory of your Zen Cart file-system.</li>
+        <li>Sign into your Zen Cart admin console.</li>
+        <li>Navigate to <strong>Modules :: Plugin Manager</strong> and click on the <b>Printable Price List</b> row.</li>
+        <li>From the right-hand sidebox, click the <em>Install</em> button and, from the next sidebox display click that <em>Install</em> button to install the plugin.</li>
+    </ol>
+    <p>That's it! Next, check out the plugin's online <a href="https://github.com/lat9/printable_price_list/wiki" target="_blank">wiki</a> articles for additional information (like how to configure it).</p>
 
-<h3>Store-Side Configuration</h3>
-<img class="small_img" src="ppl_list.jpg" alt="Price-list Display" title="Price-list Display" />
-<p>From your Zen Cart store, you access the pricelist by navigating your browser to <code>https://www.example/index.php?main_page=pricelist</code>.  Alternative profiles can be accessed directly by adding the profile's ID to the URL: <code>https://www.example.com/index.php?main_page=pricelist&profile=3</code>.  If the price-list is installed solely for the store administrators' use, you're finished.</p>
-<p>If you want your customers to be able to access the price-list, you'll want to add a link to the price list:</p>
-<ol>
-  <li>Using EZ-pages.  Set the <em>Internal Link URL</em> to <b>index.php?main_page=pricelist</b>.  You might want also to choose <em>Open New Window</em> to <b>Yes</b> since the price list is usually not integrated into the store's look-and-feel.</li>
-  <li>Enable the &quot;Information&quot; sidebox link using the setting available in <em>Configuration-&gt;Printable Price-list</em>.</li>
-</ol>
-<p>The price-list displays in a format similar to the sample image to the left.</p>
-<div class="clearBoth"></div>
-
-<hr />
-<h2 id="install">Installation</h2>
-<p>This plugin currently has <b>no</b> <span class="corefile">core-file overwrites</span>; you should <strong>always</strong> backup your cart's database and files prior to making any changes.</p>
-<ol>
-  <li>Unzip the plugin's package file, which you've most likely already done if you're reading this!</li>
-  <li>Rename the /YOUR_ADMIN folder to match your Zen Cart admin folder name.</li>
-  <li>Rename the /includes/modules/sideboxes/YOUR_TEMPLATE folder, changing YOUR_TEMPLATE to match your current template's name.  If your current template already includes changes to the information.php sidebox, you'll need to merge those pre-existing changes with the change introduced by this plugin.</li>
-  <li>Sign into your Zen Cart admin console.</li>
-  <li>Copy the plugin's files to your store's file system.<ol>
-    <li>/includes/extra_definitions/pricelist_filenames.php</li>
-    <li>/includes/languages/dutch/pricelist.php</li>
-    <li>/includes/languages/dutch/extra_definitions/printable_pricelist_extra_definitions.php</li>
-    <li>/includes/languages/english/pricelist.php</li>
-    <li>/includes/languages/english/extra_definitions/printable_pricelist_extra_definitions.php</li>
-    <li>/includes/modules/pages/pricelist/header_php.php</li>
-    <li>/includes/modules/sideboxes/YOUR_TEMPLATE/information.php</li>
-    <li>/includes/templates/template_default/pricelist/html_header.php</li>
-    <li>/includes/templates/template_default/pricelist/profile-1.css</li>
-    <li>/includes/templates/template_default/pricelist/profile-2.css</li>
-    <li>/includes/templates/template_default/pricelist/profile-3.css</li>
-    <li>/includes/templates/template_default/pricelist/stylesheet.css</li>
-    <li>/includes/templates/template_default/pricelist/tpl_box_default.php</li>
-    <li>/includes/templates/template_default/sideboxes/tpl_main_page.php</li>
-    <li>/YOUR_ADMIN/includes/auto_loaders/config.printable_price_list_admin.php <span class="smaller">(Added in v3.0.0)</span></li>
-    <li>/YOUR_ADMIN/includes/functions/extra_functions/init_price_list_admin.php <span class="smaller">(No longer used, v3.0.0 and later)</span></li>
-    <li>/YOUR_ADMIN/includes/init_includes/init_price_list_admin.php <span class="smaller">(Added in v3.0.0)</span></li>
-    <li>/YOUR_ADMIN/includes/languages/english/extra_definitions/printable_pricelist_menu_definitions.php</li>
-  </ol></li>
-  <li>Refresh the screen in your Zen Cart admin console by clicking the &quot;Admin Home&quot; link; the configuration settings for the <em>Printable Price-list</em> will auto-install.</li>
-</ol>
-
-<hr />
-<h2>Version History</h2>
-<ul>
- <li>v3.0.1, 2022-01-22 (lat9/swguy):<ol>
-    <li>BUGFIX: Correct missing parentheses on function call.</li>
-    <li>The following files were changed:<ol>
-        <li>/includes/templates/template_default/pricelist/tpl_main_page.php</li>
-        <li>/YOUR_ADMIN/includes/init_includes/init_price_list_admin.php</li>
-    </ol></li>
-  </ol></li>
-  <li>v3.0.0, 2021-11-18 (lat9):<ol>
-    <li>CHANGE: Minimum Zen Cart version is now zc157.</li>
-    <li>BUGFIX: Include 'date_added' when creating initial configuration settings.</li>
-    <li>BUGFIX: Correct PHP warnings issued if no pricing is to be displayed.</li>
-    <li>BUGFIX: Correctly display prices with/without tax, based on the site's configuration setting.</li>
-    <li>BUGFIX: Product pricing now includes any updates for products priced by attributes.</li>
-    <li>CHANGE: Price-lists can now be configured for featured, special or sub-category products' listings.</li>
-    <li>CHANGE: Only categories with products are now displayed.</li>
-    <li>CHANGE: Now displaying products' options' with pricing.</li>
-    <li>CHANGE: Products' images (if configured) now display next to the product's name, no more location randomization.</li>
-  </ol></li>
-  <li>v2.0.3, 2016-01-24 (lat9):<ol>
-    <li>BUGFIX: <em>Price (inc)</em> not properly calculating the included tax.</li>
-  </ol></li>
-  <li>v2.0.2, 2016-01-13 (lat9):<ol>
-    <li>BUGFIX: <em>Price (ex)</em> not displayed if <em>Price (inc)</em> not displayed, too.</li>
-  </ol></li>
-  <li>v2.0.1, 2015-07-24 (lat9):<ol>
-    <li>BUGFIX: Corrected the name of /includes/templates/template_default/pricelist/profile-1.css (was proile-1.css).</li>
-    <li>BUGFIX: Include missing language /extra_definition files.</li>
-    <li>CHANGE: Open pricelist in a new window when <em>Information</em> sidebox link is clicked.  Changed /includes/modules/sideboxes/YOUR_TEMPLATE/information.php.</li>
-    <li>CHANGE: Add configuration switch to enable/disable display of the currency symbol in the pricelist display's header.  Changed /YOUR_ADMIN/includes/functions/extra_functions/init_price_list_admin.php and /includes/templates/template_default/pricelist/tpl_main_page.php.</li>
-    <li>CHANGE: Added permissions-check notice to the top of this readme.</li>
-  </ol></li>
-  <li>v2.0.0, 2014-10-26 (lat9): Initial release for Zen Cart v1.5.1 and later.  The following changes were introduced:<ol>
-    <li>Converted separate SQL installation script into an admin auto-loaded script.</li>
-    <li>Re-structured to make use of current browsers' ability to handle proper printing of web-pages via CSS media-print styling.  Many configuration settings from previous versions are no longer required!</li>
-  </ol></li>
-  <li>v1.5.0, 2007-12-20 (paulm): Last update for the Zen Cart v1.3.x series.  Refer to that plugin's readme.txt for additional change history.</li>
-</ul>
-
+    <hr>
+    <h2>Version History</h2>
+    <ul>
+        <li>v4.0.1, 2024-07-22 (lat9):<ol>
+            <li>BUGFIX: Correct PHP Warnings when selected category has no sub-categories.</li>
+            <li>BUGFIX: Correct PHP issues when <samp>$_GET</samp> parameters are tinkered with.</li>
+        </ol></li>
+        <li>v4.0.0, 2024-06-01 (lat9):<ol>
+            <li>CHANGE: The plugin has been converted to an encapsulated plugin, making its installation and removal much easier.</li>
+            <li>BUGFIX: Pre-declare all class variables for PHP 8.2 deprecation.</li>
+            <li>BUGFIX: Correct PHP Warnings for conditionally-available price-list product features.</li>
+        </ol></li>
+        <li>v3.0.1, 2022-01-22 (lat9/swguy):<ol>
+            <li>BUGFIX: Correct missing parentheses on function call.</li>
+            <li>The following files were changed:<ol>
+                <li>/includes/templates/template_default/pricelist/tpl_main_page.php</li>
+                <li>/YOUR_ADMIN/includes/init_includes/init_price_list_admin.php</li>
+            </ol></li>
+        </ol></li>
+        <li>v3.0.0, 2021-11-18 (lat9):<ol>
+            <li>CHANGE: Minimum Zen Cart version is now zc157.</li>
+            <li>BUGFIX: Include 'date_added' when creating initial configuration settings.</li>
+            <li>BUGFIX: Correct PHP warnings issued if no pricing is to be displayed.</li>
+            <li>BUGFIX: Correctly display prices with/without tax, based on the site's configuration setting.</li>
+            <li>BUGFIX: Product pricing now includes any updates for products priced by attributes.</li>
+            <li>CHANGE: Price-lists can now be configured for featured, special or sub-category products' listings.</li>
+            <li>CHANGE: Only categories with products are now displayed.</li>
+            <li>CHANGE: Now displaying products' options' with pricing.</li>
+            <li>CHANGE: Products' images (if configured) now display next to the product's name, no more location randomization.</li>
+        </ol></li>
+        <li>v2.0.3, 2016-01-24 (lat9):<ol>
+            <li>BUGFIX: <em>Price (inc)</em> not properly calculating the included tax.</li>
+        </ol></li>
+        <li>v2.0.2, 2016-01-13 (lat9):<ol>
+            <li>BUGFIX: <em>Price (ex)</em> not displayed if <em>Price (inc)</em> not displayed, too.</li>
+        </ol></li>
+        <li>v2.0.1, 2015-07-24 (lat9):<ol>
+            <li>BUGFIX: Corrected the name of /includes/templates/template_default/pricelist/profile-1.css (was proile-1.css).</li>
+            <li>BUGFIX: Include missing language /extra_definition files.</li>
+            <li>CHANGE: Open pricelist in a new window when <em>Information</em> sidebox link is clicked.  Changed /includes/modules/sideboxes/YOUR_TEMPLATE/information.php.</li>
+            <li>CHANGE: Add configuration switch to enable/disable display of the currency symbol in the pricelist display's header.  Changed /YOUR_ADMIN/includes/functions/extra_functions/init_price_list_admin.php and /includes/templates/template_default/pricelist/tpl_main_page.php.</li>
+            <li>CHANGE: Added permissions-check notice to the top of this readme.</li>
+        </ol></li>
+        <li>v2.0.0, 2014-10-26 (lat9): Initial release for Zen Cart v1.5.1 and later.  The following changes were introduced:<ol>
+            <li>Converted separate SQL installation script into an admin auto-loaded script.</li>
+            <li>Re-structured to make use of current browsers' ability to handle proper printing of web-pages via CSS media-print styling.  Many configuration settings from previous versions are no longer required!</li>
+          </ol></li>
+        <li>v1.5.0, 2007-12-20 (paulm): Last update for the Zen Cart v1.3.x series.  Refer to that plugin's readme.txt for additional change history.</li>
+    </ul>
 </body>
 </html>
