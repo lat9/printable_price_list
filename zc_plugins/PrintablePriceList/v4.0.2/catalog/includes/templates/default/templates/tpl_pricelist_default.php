@@ -6,7 +6,7 @@
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
  * @version v1.5.8a (or newer)
  *
- * Last updated: v4.0.1
+ * Last updated: v4.0.2
  */
 ?>
     <div class="noPrintPL">
@@ -450,7 +450,7 @@ if ($price_list->config['debug']) {
         echo ',&nbsp;memory_get_peak_usage: ' . memory_get_peak_usage();
     }
     echo ',&nbsp;queries: ' . $db->queryCount();
-    echo ',&nbsp;query time: ' . $db->total_query_time;
+    echo ',&nbsp;query time: ' . $db->queryTime();
 ?>
         </p>
     </div>
